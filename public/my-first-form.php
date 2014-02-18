@@ -32,7 +32,7 @@ var_dump($_POST);
 
 	<h3> Compose an Email </h3>
 
-	<form method="POST" action="http://requestb.in/13xpwdz1">
+	<form method="POST" action="">
 	    <p>
 	        <label for="To">To:</label>
 	        <textarea id="To" name="To" rows="1" cols="30"></textarea>
@@ -61,7 +61,7 @@ var_dump($_POST);
 
 <h3> Multiple Choice Test </h3>
 
-	<form method="POST" action="http://requestb.in/13xpwdz1">
+	<form method="POST" action="">
 	    <p>
 	       What is the best city in Texas? 
 	    </p>
@@ -114,8 +114,37 @@ var_dump($_POST);
 	    	</label>
 	    </p>
 	    <p>
-	        <input type="submit" value="send" />
+	    <p>
+	    </p>
+	    </p>
+	    <p>
+	    <label for="languages">What languages do you plan on learning? </label>
+			<select id="languages" name="languages[]" multiple>
+    			<option value="PHP">PHP</option>
+    			<option value="Basic">Basic</option>
+    			<option value="Ruby">Ruby</option>
+			</select>
+		</p>
+			<button type="submit">submit</button>
+	</form>
+
+	<h3> Select Testing </h3>
+
+	<form method="POST" action="">
+	    <p>
+	       Are you having fun in Codeup? 
+	    </p>
+		<p>
+	    	<label for="answer">Yes or No: </label>
+				<select id="answer" name="answer">
+    				<option value="1">Yes</option>
+    				<option value="2">No</option>
+				</select>
+		</p>
+		<p>
+	       	<button type="submit">submit</button>   	
 	    </p>
 	</form>
+
 
 </html>
