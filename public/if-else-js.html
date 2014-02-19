@@ -4,26 +4,43 @@
 	<title> If/Else Statements with favorite colors</title>
 </head>
 <body>
-// ignore these lines for now
-// just know that the variable 'color' will end up with a random value from the colors array
-var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-var color = colors[Math.floor(Math.random()*colors.length)];
+	<script>
+	// ignore these lines for now
+	// just know that the variable 'color' will end up with a random value from the colors array
+	var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+	var color = colors[Math.floor(Math.random()*colors.length)];
 
-// todo, change this to your favorite color from the list
-var favorite = 'blue'; 
+	// todo, change this to your favorite color from the list
+	var favorite = 'blue'; 
 
-// todo: Create a block of if/else statements to check for every color except indigo and violet.
-if (color == 'blue') {
-	
-}
-// todo: When a color is encountered log a message that tells the color, and an object of that color.
-//       Example: Blue is the color of the sky.
+	// todo: Create a block of if/else statements to check for every color except indigo and violet.
+	if (color == 'red') {
+		console.log("Nope, red isn't my favorite color.  I do like red apples though.");
 
-// todo: Have a final else that will catch indigo and violet.
-// todo: In the else, log: I don't know anything by that color.
+	} else if (color == 'orange') {
+		console.log("The only good thing for orange is Jello!");
 
-// todo: Using the ternary operator, conditionally log a statement that
-//       says whether the random color matches your favorite color.
+	} else if (color == 'yellow') {
+		console.log("I wouldn't eat yellow snow.");
+
+	} else if (color == 'green') {
+		console.log("I like green grass.");
+
+	} else if (color == 'blue') {
+		console.log("Yes, you guessed my favorite color is blue!  I like blue skies.");
+
+	} else {
+		console.log("Indigo and violet are only for Easter eggs!");
+	}
+	// todo: When a color is encountered log a message that tells the color, and an object of that color.
+	//       Example: Blue is the color of the sky.
+
+	// todo: Have a final else that will catch indigo and violet.
+	// todo: In the else, log: I don't know anything by that color.
+	var answer = (color == 'blue') ? console.log("Yes, my favorite color is blue.") : console.log("No, No, No!  You didn't guess my favorite color.");
+	// todo: Using the ternary operator, conditionally log a statement that
+	//       says whether the random color matches your favorite color.
+	</script>
 </body>
 </html>
 
