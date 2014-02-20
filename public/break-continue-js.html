@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>Break and Continue in JS</title>
+</head>
+<body>
+		<script>
+			do {
+				var random_number = Math.floor((Math.random()*50)+1);
+			} while (random_number % 2 == 0);
+
+			for (var number = 1; number <= 50; number = number + 2) {
+				
+				if (number != random_number){
+
+					console.log("Here is an odd number: " + number);
+
+				} else {
+					console.log("Yipes! Skipping number " + random_number);
+				
+				}
+				
+			}
+
+
+
+
+		</script>
+
+</body>
+</html>
