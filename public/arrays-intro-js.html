@@ -16,6 +16,11 @@
 		for (i = 0; i < names_length; i++){
 			console.log(names[i]);
 		}
+
+		names.forEach(function(element, index, names){
+			console.log("The band at index " + index + " is " + element);
+		});
+
 	</script>
 </body>
 </html>
