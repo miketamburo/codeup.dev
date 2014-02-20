@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Dialog Functions for User Interaction</title>
+</head>
+<body>
+	<script>
+		// todo: Ask the user for their name.
+		// Keep asking if an empty input is provided.
+
+		var name = '';
+
+		while (name == '') {
+			name = prompt("What is your name?");
+		}
+
+		// todo: Show an alert message that welcomes the user based on their input.
+		alert("Welcome to computer - human interaction.");
+
+		// todo: Ask the user if they like pizza.
+		// Based on their answer tell show a creative alert message.
+		var answer = confirm("Do you like pizza?  Click 'OK' if you do.");
+
+		(answer) ? alert(name + ", I like pizza too!") : alert("You're dead to me.");
+
+	</script>
+</body>
+</html>
