@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Functions in js</title>
+</head>
+<body>
+	<script>
+		(function(){
+			var myNameIs = 'Mike'; 
+			console.log("Hello from " + myNameIs);
+		}());
+
+
+
+
+		(function(){
+			var random = Math.floor((Math.random()*100)+1);
+			
+			(random % 2 == 0) ? console.log("The number passed (" + random + ") is even") : console.log("The number (" + random + ") is odd");
+		}());
+		
+
+	
+
+	</script>
+</body>
+</html>
