@@ -1,22 +1,36 @@
 <?php
 
-$items = array();
+function loadFile($filename){
+	$handle = fopen($filename, "r");
+	$filesize = filesize($filename);
+	
+	$contents = fread($handle, $filesize);
+	fclose($handle);
+	return explode("\n", $contents);
+	
+}
+
+function saveFile($filename, $items){
+	$item = implode("\n", $items);
+	$handle = fopen($filename, "w");
+	fwrite($handle, $item);
+	fclose($handle);
+}
+
 $filename = "data/todoitems.txt";
+$items = loadFile($filename);
 
-if (isset($_POST['save_item']) && $_POST['save_item'] == "yes"){
-    $handle = fopen($filename, "w");
-    $items = array_push($items, $_POST['enter_item']);
-    $item = implode("\n", $items);
-    fwrite($handle, $item);
-    fclose($handle);
-} 
+if (isset($_POST['enter_item'])){
+    $item = $_POST['enter_item'];
+    array_push($items, $item);
+	saveFile($filename, $items);    
+}
 
-$handle = fopen($filename, "r");
-$contents = fread($handle, filesize($filename));
-fclose($handle);
-$contents_array = explode("\n", $contents);
-
-$items = array_merge($items, $contents_array);
+if (isset($_GET['remove'])) {
+	$key = $_GET['remove'];
+	unset($items[$key]);
+	saveFile($filename, $items);	
+}
 
 ?>
 
@@ -29,9 +43,9 @@ $items = array_merge($items, $contents_array);
 		<h2>TODO List</h2>
 			<ul>
 				<?php 
-				foreach($items as $item){
+				foreach($items as $key => $item){
 					if (!empty($item)){
-					echo "<li>$item <a href="todo-list.php?remove=x">Mark Complete</a></li>";
+					echo "<li>$item <a href=\"?remove=$key\">Mark Complete</a></li>";
 					}
 				}
 				?>
@@ -42,18 +56,10 @@ $items = array_merge($items, $contents_array);
 			<form method="POST" action="">
 				<p> 
 					<p>
-	        			<label for="enter_item">Enter Item:</label>
-	        			<textarea id="enter_item" name="enter_item" rows="1" cols="30"></textarea>
-	    			</p>
-	    			<p>
-	    				<label for = "save_item">
-	    				<input type="checkbox" id="save_item" name="save_item" value="yes" checked> Save item
-	    				</label>
-	    			</p>
-				    <p>
+	        			<input type="text" id="enter_item" name="enter_item" style="width:200px;">
 				        <input type="submit" value="save" />
 				    </p>
-					</p>
+				</p>
 			</form>
 
 	</body>
