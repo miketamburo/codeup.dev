@@ -11,9 +11,9 @@ function loadFile($filename){
 }
 
 function saveFile($filename, $items){
-	$item = implode("\n", $items);
+	$itemStr = implode("\n", $items);
 	$handle = fopen($filename, "w");
-	fwrite($handle, $item);
+	fwrite($handle, $itemStr);
 	fclose($handle);
 }
 
@@ -23,13 +23,18 @@ $items = loadFile($filename);
 if (isset($_POST['enter_item'])){
     $item = $_POST['enter_item'];
     array_push($items, $item);
+
 	saveFile($filename, $items);    
 }
 
 if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];
 	unset($items[$key]);
-	saveFile($filename, $items);	
+
+	saveFile($filename, $items);
+
+	header("Location: todo-list.php");
+	exit;	
 }
 
 ?>
