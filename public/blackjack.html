@@ -12,167 +12,172 @@
 		// build a deck (array) of cards
 		var eachCard = new Array();
 		// card values should be "VALUE SUIT"+ ex: "7 H" - shuffle the deck before returning it
+		var new_deck = new Array();
 
 		function buildDeck(suits, cards) {
-		var new_deck = array();
 		var worth = 0;
-			cards.forEach (element, index, cards){
-		// rotate through each card and assign a suit, a value, and determine if its an ace	
-			for (i=0; i<=3; i++){
-				var suit = suits[i];
+		
+			cards.forEach (function(card, index, cards){
+			// rotate through each card and assign a suit, a value, and determine if its an ace	
 
-				if (card === 'A') {
-					worth = 11;
-				} else if (card === 'J' || card === 'Q' || card === 'K') {
-				worth = 10;
-			
-			} else {
-				worth = parseInt(card);
-	
-			} 
-			// card name is in index 0, value is in 1, suit is in 2
-			// eachCard = [card, worth, suit];
-			eachCard = ['name' => card, 'value' => worth,  'suit' => suit];
-			var new_deck[] = eachCard;	
-		}
-	}
-		// shuffle the cards in the deck
-		shuffle(new_deck);
+				for (i=0; i<=3; i++){
+					var suit = suits[i];
 
-		return new_deck;
-}
-
-// get total value for a hand of cards
-// aces can be 1 or 11 (make them 1 if total value is over 21)
-function getHandTotal(hand) {
-	var hand_worth = 0;
-	var numOfAce = 0;
-
-	hand.forEach (element, index, hand){
-		hand_worth += card['value'];
-		if (card['name'] == 'A') {
-			numOfAce++;
-		}
-
-		While (hand_worth > 21) {
-			if (numOfAce != 0){
-				hand_worth = hand_worth - 10;
-				numOfAce--;
-			} else {
-				break;
-			}
-		}
-	}
-		return hand_worth;
-}
-
-// print out a hand of cards -- name is the name of the player
-// hidden is to initially show only first card of hand (for dealer)
-// output should look like this:  Dealer: [4 C] [???] Total: ???
-// or Player: [J D] [2 D] Total: 12
-function echoHand(hand, name, hidden = false) {
-	var string = " ";
-	hand.forEach (element, index, hand){
-		if (hidden == true) {
-			string = ("[" + card['name'] + " " + card['suit'] + "] ");
-			break;
-		} else {
-			string += ("[" + card['name'] + " " + card['suit'] + "] ");
-		}	
-	}
-	alert(name + "'s Hand: " + string + " ");
-}
-// Welcome the user and get their name
-var name = prompt("Welcome to Vegas Blackjack.\nPlease enter your name: ");
-
-// build the deck of cards
-var shuffled_deck = buildDeck(suits, cards);
-
-// initialize a dealer and player hand
-var dealer = [];
-var player = [];
-
-// Start the game -- dealer and player each draw two cards
-for (i=0; i<2; i++){
-	dealer[] = shuffled_deck.pop();
-	player[] = shuffled_deck.pop();
-}
-
-// echo the dealer hand, only showing the first card
-echoHand (dealer, 'Dealer', true) + PHP_EOL; 
-
-// echo the player hand
-echoHand (player, name, false);
-var players_total = getHandTotal(player);
-
-alert("Player's card total is " + players_total);
-
-if (players_total == 21) {
-	alert("LUCKY YOU!  YOU WIN!!!!!!");
-	exit();
-}
-
-// allow player to "(H)it or (S)tay?" till they bust (exceed 21) or stay
-while (players_total < 21) {	
-	// Get player's answer
-	var answer.toUpperCase() = prompt("Do you want to (H)it or (S)tay?");
-
-	if (answer === 'H' || answer === 'HIT'){
+					if (card === 'A') {
+						worth = 11;
+					} else if (card === 'J' || card === 'Q' || card === 'K') {
+					worth = 10;
 				
-		player[] = shuffled_deck.pop();
-		
-		echoHand (player, name, false);
+					} else {
+					worth = parseInt(card);
+					} 
+				// card name is in index 0, value is in 1, suit is in 2
+				// eachCard = [card, worth, suit];
+				eachCard = [card, worth, suit];
+				new_deck = eachCard;	
+				}
+			});
+			// shuffle the cards in the deck
+			new_deck.sort(Math.round(Math.random())- 0.5);
 
-		players_total = getHandTotal(player);
-		
+			return new_deck;
+		}
+
+		// get total value for a hand of cards
+		// aces can be 1 or 11 (make them 1 if total value is over 21)
+		function getHandTotal(hand) {
+			var numOfAce = 0;
+			var hand_worth = 0;
+
+			hand.forEach(function(element, index, hand){
+				hand_worth += card[1];
+					if (card['name'] == 'A') {
+						numOfAce++;
+					}
+
+				while (hand_worth > 21){
+					if (numOfAce != 0){
+						hand_worth -= 10;
+						numOfAce--;
+
+					} else {
+						break;
+					}
+				}
+			});
+				// return hand_worth;
+		}
+
+		// print out a hand of cards -- name is the name of the player
+		// hidden is to initially show only first card of hand (for dealer)
+		// output should look like this:  Dealer: [4 C] [???] Total: ???
+		// or Player: [J D] [2 D] Total: 12
+		// card name is in index 0, value is in 1, suit is in 2
+		function echoHand(hand, name, hidden) {
+			var hidden = false;
+			var string = " ";
+			hand.forEach(function(element, index, hand){
+				if (hidden == true) {
+					string = ("[" + card[0] + " " + card[2] + "] ");
+					// break;
+				} else {
+					string += ("[" + card[0] + " " + card[2] + "] ");
+				}	
+			});
+			alert(name + "'s Hand: " + string + " ");
+		}
+		// Welcome the user and get their name
+		var name = prompt("Welcome to Vegas Blackjack.\nPlease enter your name: ");
+
+		// build the deck of cards
+		var shuffled_deck = buildDeck(suits, cards);
+
+		// initialize a dealer and player hand
+		var dealer = [];
+		var player = [];
+
+		// Start the game -- dealer and player each draw two cards
+		for (i=0; i<2; i++){
+			dealer = shuffled_deck.pop();
+			player = shuffled_deck.pop();
+		}
+
+		// echo the dealer hand, only showing the first card
+		echoHand (dealer, 'Dealer', true); 
+
+		// echo the player hand
+		echoHand (player, name, false);
+		var players_total = getHandTotal(player);
+
 		alert("Player's card total is " + players_total);
 
-	} else if (answer === 'S' || answer === 'STAY') {
-		break;
-	} 
-	// at this point, if the player has more than 21, tell them they busted
-	// otherwise, if they have 21, tell them they won (regardless of dealer hand)
-	if (players_total == 21) {
-		alert("You win!");
-		exit ();
+		if (players_total == 21) {
+			alert("LUCKY YOU!  YOU WIN!!!!!!");
+			exit();
+		}
 
-	} else if (players_total > 21) {
-		alert("BUST!!!!!!!!!  Dealer wins!!!");
-		exit();
-	}
-}
+		// allow player to "(H)it or (S)tay?" till they bust (exceed 21) or stay
+		while (players_total < 21) {	
+			// Get player's answer
+			var answer = prompt("Do you want to (H)it or (S)tay?");
+			answer = answer.toUpperCase(); 
 
-// show the dealer's hand (all cards)
-echoHand (dealer, 'Dealer', false); 
+			if (answer === 'H' || answer === 'HIT'){
+						
+				player = shuffled_deck.pop();
+				
+				echoHand (player, name, false);
 
-var dealers_total = getHandTotal(dealer);
-alert("Dealer's card total is " + dealers_total);
+				players_total = getHandTotal(player);
+				
+				alert("Player's card total is " + players_total);
 
-while ((dealers_total < 17) && (dealers_total <= players_total)) {
+			} else if (answer === 'S' || answer === 'STAY') {
+				break;
+			} 
+			// at this point, if the player has more than 21, tell them they busted
+			// otherwise, if they have 21, tell them they won (regardless of dealer hand)
+			if (players_total == 21) {
+				alert("You win!");
+				exit ();
 
-		alert("Dealer takes a card. ");
-		dealer[] = shuffled_deck.pop();
-		
-		echoHand (dealer, 'Dealer', false);
-		dealers_total = getHandTotal(dealer);
-		alert("Dealer's card total is " + dealers_total);	
-} 
+			} else if (players_total > 21) {
+				alert("BUST!!!!!!!!!  Dealer wins!!!");
+				exit();
+			}
+		}
 
-if (dealers_total >= 22) {
-	alert("Dealer Busted!!!!!!! YOU WIN!!!!");
+		// show the dealer's hand (all cards)
+		echoHand (dealer, 'Dealer', false); 
 
-} else if (dealers_total == 21 && players_total != 21) {
-	alert("Dealer WINS!!!!!!");
+		var dealers_total = getHandTotal(dealer);
+		alert("Dealer's card total is " + dealers_total);
 
-} else if (dealers_total > players_total && dealers_total <= 21) {
-	alert("Dealer WINS!!!!!!");
+		while ((dealers_total < 17) && (dealers_total <= players_total)) {
 
-} else if (dealers_total == players_total) {
-	alert("The game is a push+");
+				alert("Dealer takes a card. ");
+				dealer = shuffled_deck.pop();
+				
+				echoHand (dealer, 'Dealer', false);
+				dealers_total = getHandTotal(dealer);
+				alert("Dealer's card total is " + dealers_total);	
+		} 
 
-} else if (dealers_total < players_total && players_total < 21) {
-	alert("name WINS!!!");
-}
+		if (dealers_total >= 22) {
+			alert("Dealer Busted!!!!!!! YOU WIN!!!!");
+
+		} else if (dealers_total == 21 && players_total != 21) {
+			alert("Dealer WINS!!!!!!");
+
+		} else if (dealers_total > players_total && dealers_total <= 21) {
+			alert("Dealer WINS!!!!!!");
+
+		} else if (dealers_total == players_total) {
+			alert("The game is a push+");
+
+		} else if (dealers_total < players_total && players_total < 21) {
+			alert("name WINS!!!");
+		}
 	</script>
 </body>
 </html>
