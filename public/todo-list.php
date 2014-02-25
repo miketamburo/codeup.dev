@@ -2,6 +2,7 @@
 // open and read a text file and return an array
 $newItems = array();
 
+
 function loadFile($filename){
 	$handle = fopen($filename, "r");
 	$filesize = filesize($filename);
@@ -29,7 +30,7 @@ $filename = "data/todoitems.txt";
 $items = loadFile($filename);
 //File to upload script
 // Verify there were uploaded files and no errors
-if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0) {
+if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUpLoad']['type'] == 'text/plain') {
     // Set the destination directory for uploads
     $upload_dir = '/vagrant/sites/codeup.dev/public/uploads/';
     // Grab the filename from the uploaded file by using basename
@@ -40,12 +41,9 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0) {
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 
     $newItems = loadFile($saved_filename);
-}
-
-if ($_FILES['fileUpLoad']['type'] == 'text/plain'){    
 	$items = array_merge($items, $newItems);
 	saveFile($filename, $items);
-}    
+} 
 
 // Check if we saved a file
 if (isset($saved_filename)) {
