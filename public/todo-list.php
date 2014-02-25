@@ -10,6 +10,7 @@ function loadFile($filename){
 		fclose($handle);
 		return explode("\n", $contents);
 	} else {
+		fclose($handle);
 		return array();
 	}
 	
