@@ -68,7 +68,14 @@ if (isset($_GET['remove'])) {
 			<form method="POST" action="">
 				<p> 
 					<p>
+						<label for='enter_item'> Item to add: </label>
 	        			<input id="enter_item" name="enter_item" type="text" autofocus = 'autofocus' placeholder="Enter new item" style="width:200px;">
+				    </p>
+				    <p>
+						<label for='fileUpLoad'> File to upload: </label>
+	        			<input id='fileUpLoad' name='fileUpLoad' type="file">
+				    </p>
+				    <p>    
 				        <input type="submit" value="Add item" />
 				    </p>
 				</p>
