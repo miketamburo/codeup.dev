@@ -1,5 +1,5 @@
 <?php
-
+// open and read a text file and return an array
 function loadFile($filename){
 	$handle = fopen($filename, "r");
 	$filesize = filesize($filename);
@@ -15,7 +15,7 @@ function loadFile($filename){
 	}
 	
 }
-
+// save string to text file
 function saveFile($filename, $items){
 	$itemStr = implode("\n", $items);
 	$handle = fopen($filename, "w");
