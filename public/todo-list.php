@@ -82,13 +82,12 @@ if (isset($_GET['remove'])) {
 	<body>
 		<h2>TODO List</h2>
 			<ul>
-				<?php 
-				foreach($items as $key => $item){
-					if (!empty($item)){
-					echo "<li>$item <a href=\"?remove=$key\">Mark Complete</a></li>";
-					}
-				}
-				?>
+				<? foreach($items as $key => $item): ?>
+					<? if (!empty($item)): ?>
+					<li><?= $item ?><a href=\"?remove=$key\">Mark Complete</a></li>
+					<? endif; ?>
+				
+				<? endforeach; ?>
 			</ul>
 
 			<p>Enter your item or choose your option.</p>	
