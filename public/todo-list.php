@@ -3,10 +3,15 @@
 function loadFile($filename){
 	$handle = fopen($filename, "r");
 	$filesize = filesize($filename);
+
+	if ($filesize > 0){
 	
-	$contents = fread($handle, $filesize);
-	fclose($handle);
-	return explode("\n", $contents);
+		$contents = fread($handle, $filesize);
+		fclose($handle);
+		return explode("\n", $contents);
+	} else {
+		return array();
+	}
 	
 }
 
@@ -20,9 +25,10 @@ function saveFile($filename, $items){
 $filename = "data/todoitems.txt";
 $items = loadFile($filename);
 
-if (isset($_POST['enter_item'])){
-    $item = $_POST['enter_item'];
+if (isset($_POST['enter_item']) && !empty($_POST['enter_item'])){
+    $item = ucfirst($_POST['enter_item']);
     array_push($items, $item);
+   
 
 	saveFile($filename, $items);    
 }
@@ -56,13 +62,13 @@ if (isset($_GET['remove'])) {
 				?>
 			</ul>
 
-			<p>Enter your item or selection then choose your option.</p>	
+			<p>Enter your item or choose your option.</p>	
 
 			<form method="POST" action="">
 				<p> 
 					<p>
-	        			<input type="text" id="enter_item" name="enter_item" style="width:200px;">
-				        <input type="submit" value="save" />
+	        			<input id="enter_item" name="enter_item" type="text" autofocus = 'autofocus' placeholder="Enter new item" style="width:200px;">
+				        <input type="submit" value="Add item" />
 				    </p>
 				</p>
 			</form>
