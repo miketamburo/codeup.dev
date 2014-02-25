@@ -1,5 +1,7 @@
 <?php
 // open and read a text file and return an array
+$newItems = array();
+
 function loadFile($filename){
 	$handle = fopen($filename, "r");
 	$filesize = filesize($filename);
@@ -36,7 +38,14 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0) {
     $saved_filename = $upload_dir . $uploadfilename;
     // Move the file from the temp location to our uploads directory
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
+
+    $newItems = loadFile($saved_filename);
 }
+
+if ($_FILES['fileUpLoad']['type'] == 'text/plain'){    
+	$items = array_merge($items, $newItems);
+	saveFile($filename, $items);
+}    
 
 // Check if we saved a file
 if (isset($saved_filename)) {
