@@ -1,7 +1,7 @@
 <?php
 // open and read a text file and return an array
 $newItems = array();
-
+$errorMessage = '';
 
 function loadFile($filename){
 	$handle = fopen($filename, "r");
@@ -40,10 +40,20 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
     // Move the file from the temp location to our uploads directory
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 
-    $newItems = loadFile($saved_filename);
-	$items = array_merge($items, $newItems);
-	saveFile($filename, $items);
-} 
+	$newItems = loadFile($saved_filename);
+
+    if (isset($_POST['overwrite']) && ($_POST['overwrite']) == 'yes'){
+    	$filename = "data/todoitems.txt";
+    	saveFile($filename, $newItems);
+    	$items = $newItems;
+    } elseif (!isset($_POST['overwrite'])){
+    	
+		$items = array_merge($items, $newItems);
+		saveFile($filename, $items);
+	}
+} else {
+	$errorMessage = "Error:  Text file not recognized.  Upload halted.";
+}
 
 // Check if we saved a file
 if (isset($saved_filename)) {
@@ -51,13 +61,11 @@ if (isset($saved_filename)) {
     echo "<p>You can download your file <a href='/uploads/{$filename}'>here</a>.</p>";
 }
 
-
 // Add an item to the list
 if (isset($_POST['enter_item']) && !empty($_POST['enter_item'])){
     $item = ucfirst($_POST['enter_item']);
     array_push($items, $item);
    
-
 	saveFile($filename, $items);    
 }
 
@@ -84,7 +92,7 @@ if (isset($_GET['remove'])) {
 			<ul>
 				<? foreach($items as $key => $item): ?>
 					<? if (!empty($item)): ?>
-					<li><?= $item ?><a href=\"?remove=$key\">Mark Complete</a></li>
+					<li><?= htmlspecialchars(strip_tags($item)); ?><a href="?remove=<?= $key; ?>">Mark Complete</a></li>
 					<? endif; ?>
 				
 				<? endforeach; ?>
@@ -92,7 +100,7 @@ if (isset($_GET['remove'])) {
 
 			<p>Enter your item or choose your option.</p>	
 
-			<form method="POST" enctype="multipart/form-data" action="">
+			<form method="POST" action="">
 				<p> 
 					<p>
 						<label for='enter_item'> Item to add: </label>
@@ -100,9 +108,13 @@ if (isset($_GET['remove'])) {
 				      
 				        <input type="submit" value="Add item" />
 				    </p>
+			</form>
+			<? if (!empty($errorMessage)):?> <?=$errorMessage; endif; ?>
+			<form method="POST" enctype="multipart/form-data" action="">
 				    <p>
 						<label for='fileUpLoad'> File to upload: </label>
 	        			<input id='fileUpLoad' name='fileUpLoad' type="file">
+	        			<input type="checkbox" id="overwrite" name="overwrite" value="yes" checked> Overwrite existing file
 	        			<input type="submit" value="Upload File" />
 				    </p>
 				</p>
