@@ -97,15 +97,16 @@ if (isset($_GET['remove'])) {
 </head>
 	<body>
 		<h2>TODO List</h2>
-			<p>Enter your item and choose your option.</p>	
+			<p>Enter your item and choose your option.</p>
+			<? if (count($items) > 0): ?>	
 			<ul>
 				<? foreach($items as $key => $item): ?>
 					<? if (!empty($item)): ?>
 					<li><?= ($item); ?> &nbsp;&nbsp;&nbsp; <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
 					<? endif; ?>
-				<? endforeach; ?>
-					
+				<? endforeach; ?>		
 			</ul>
+		<? else: ?>You have 0 TODO Items<? endif; ?>
 
 			<form method="POST" action="">
 				<p> 
