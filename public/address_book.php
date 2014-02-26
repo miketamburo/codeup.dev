@@ -31,20 +31,47 @@ function saveCSV($address_book){
 
 $address_book = loadCSV($filename);
 // Name Field
-if (!empty($_POST)){
+if (isset($_POST['personName']) && !empty($_POST['personName'])){
     $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
+} 
+// Address Field
+if (isset($_POST['address']) && !empty($_POST['address'])){
     $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
+} 
+// City Field
+if (isset($_POST['city']) && !empty($_POST['city'])){
     $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
+} 
+// State Field
+if (isset($_POST['state']) && !empty($_POST['state'])){
     $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
-    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      	
+} 
+// Zip Field
+if (isset($_POST['zip']) && !empty($_POST['zip'])){
+    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
+} 
+// Phone Field
+if (isset($_POST['phone']) && !empty($_POST['phone'])){
     $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
+} 
 
+if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
+//$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
 	array_push($address_book, $newEntryArray);
 	saveCSV($address_book);
 
 } else {
 	$errorMessage = "Required field empty.  Please complete your entry before submitting.";
+}
+if (isset($_GET['remove'])) {
+	$key = $_GET['remove'];	
+// Remove item from list and save new todo list
+	unset($address_book[$key]);
+	saveCSV($address_book);
+
+	header("Location: address_book.php");
+	exit;	
 }
 
 ?>
@@ -66,13 +93,13 @@ if (!empty($_POST)){
 					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
 				</tr>
 			
-				<? foreach($address_book as $field): ?>
+				<? foreach($address_book as $key => $field): ?>
 					<? if (!empty($field)): ?>
 						<tr>
 							<? foreach ($field as $item): ?>
 								<td><?= $item; ?></td>
 							<? endforeach; ?>	
-						</tr>
+						<td><a href="?remove=<?= $key; ?>">Delete Contact</a></td></tr>
 					<? endif; ?>
 				<? endforeach; ?>		
 			</table>
