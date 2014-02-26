@@ -2,6 +2,10 @@
 
 
 
+
+
+// header("Location: address_book.php");
+// exit;
 ?>
 
 <!DOCTYPE HTML>
@@ -11,7 +15,10 @@
 </head>
 <body>
 	<h2>Address Book</h2>
-
+	<p></p>
+	<h3>Current Address Book Entries</h3>
+	<p> </p>
+	<hr/>
 	<form method="POST" action="">
 		<label for='personName'> Name: </label>
 	    <input id="personName" name="personName" type="text" autofocus = 'autofocus' tab=1 placeholder="Enter First and Last Name" style="width:200px;">
@@ -30,7 +37,8 @@
 	    <p></p>
 	    <label for='phone'> Phone: </label>
 	    <input id="phone" name="phone" type="text" tab=6 placeholder="Enter First and Last Name" style="width:200px;">
-
+	    <p></p>
+	    <input type="submit" value="Update Address Book" />
 	</form>
 
 
