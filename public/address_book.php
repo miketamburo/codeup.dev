@@ -1,5 +1,21 @@
 <?php
+// set file name of csv file
+$csvFileName = "data/address_book.csv";
+$errorMessage = '';
+// created a function for saving a CSV file
+function saveCSV($csvFileName){
+	$handle = fopen('$csvFileName', 'w');
+		foreach ($$address_book as $fields) {
+			fputcsv($handle, $fields);
+		}
+	fclose($handle);
+}
+// Error message if field is blank
+if (isset($_POST[])){
 
+} else {
+	$errorMessage = "Required field empty.  Please complete your entry.";
+}
 
 
 
