@@ -26,55 +26,40 @@ function saveCSV($addressArray){
 		// }
 	fclose($handle);
 }
-
-$addressArray = loadCSV($address_book);
+// $addressArray = loadCSV($address_book);
 // Name Field
 if (isset($_POST['personName']) && !empty($_POST['personName'])){
-    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));
-       
-} else {
-	$errorMessage = "Required field empty.  Please complete your entry.";
-}
+    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
+} 
 // Address Field
 if (isset($_POST['address']) && !empty($_POST['address'])){
-    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));
-       
-} else {
-	$errorMessage = "Required field empty.  Please complete your entry.";
-}
+    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
+} 
 // City Field
 if (isset($_POST['city']) && !empty($_POST['city'])){
-    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));
-       
-} else {
-	$errorMessage = "Required field empty.  Please complete your entry.";
-}
+    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
+} 
 // State Field
 if (isset($_POST['state']) && !empty($_POST['state'])){
-    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));
-       
-} else {
-	$errorMessage = "Required field empty.  Please complete your entry.";
-}
+    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
+} 
 // Zip Field
 if (isset($_POST['zip']) && !empty($_POST['zip'])){
-    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));
-       
-} else {
-	$errorMessage = "Required field empty.  Please complete your entry.";
-}
+    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
+} 
 // Phone Field
 if (isset($_POST['phone']) && !empty($_POST['phone'])){
     $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
 } 
 
-if ((isset($_POST['personName']) && !empty($_POST['personName'])) && (isset($_POST['address']) && !empty($_POST['address'])) && (isset($_POST['city']) && !empty($_POST['city'])) && (isset($_POST['state']) && !empty($_POST['state'])) && (isset($_POST['zip']) && !empty($_POST['zip']))){
-
+//if ((isset($_POST['personName']) && !empty($_POST['personName'])) && (isset($_POST['address']) && !empty($_POST['address'])) && (isset($_POST['city']) && !empty($_POST['city'])) && (isset($_POST['state']) && !empty($_POST['state'])) && (isset($_POST['zip']) && !empty($_POST['zip']))){
+if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
 //$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
-$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-
-$addressArray = array_merge($addressArray, $newEntryArray);
-saveCSV($addressArray);
+	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
+	$addressArray = array_merge($addressArray, $newEntryArray);
+	saveCSV($addressArray);
+} else {
+	$errorMessage = "Required field empty.  Please complete your entry before submitting.";
 }
 
 ?>
@@ -89,7 +74,7 @@ saveCSV($addressArray);
 	<p></p>
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
-<!-- 	<? //if (count($address_book) > 0): ?>	 -->
+			<? if (count($addressArray) > 0): ?>
 			<ul>
 				<? foreach($addressArray as $key => $field): ?>
 					<? if (!empty($field)): ?>
@@ -97,7 +82,7 @@ saveCSV($addressArray);
 					<? endif; ?>
 				<? endforeach; ?>		
 			</ul>
-<!-- 		<? //else: ?>You have 0 address entries<? //endif; ?> -->
+		<? else: ?>You have 0 entries.<? endif; ?>
 	<hr/>
 	<? if (!empty($errorMessage)):?> <?=$errorMessage; endif; ?>
 	<p></p>
