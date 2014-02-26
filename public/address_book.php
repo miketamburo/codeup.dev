@@ -1,11 +1,6 @@
 <?php
 // set file name of csv file and set variables
-$address_book = "data/address_book.csv";
 $errorMessage = '';
-$addressArray = [
-    ['The White House', '1600 Pennsylvania Avenue NW', 'Washington', 'DC', '20500'],
-    ['Marvel Comics', 'P.O. Box 1527', 'Long Island City', 'NY', '11101'],
-    ['LucasArts', 'P.O. Box 29901', 'San Francisco', 'CA', '94129-0901']];
 $newEntryArray = array();
 $personName = '';
 $address = '';
@@ -13,54 +8,41 @@ $city = '';
 $state = '';
 $zip = '';
 $phone = '';
+$filename = "data/address_book.csv";
 
-// function loadCSV($address_book){
-// 	$handle = fopen($address_book, "r");
-// 	$filesize = filesize($address_book);
-// 	$contents = fgetcsv($handle, $filesize);
-// 	fclose($handle);
-// }
+function loadCSV($filename){
+	$contents = [];
+	$handle = fopen($filename, 'r');
+	while(($data = fgetcsv($handle)) !== FALSE) {
+  	$contents[] = $data;
+	}
+	fclose($handle);
+	return $contents;
+}
 
 // created a function for saving a CSV file
-function saveCSV($addressArray){
-	$handle = fopen('data/address_book.csv', 'a');
-		foreach ($addressArray as $fields) {
+function saveCSV($address_book){
+	$handle = fopen('data/address_book.csv', 'w');
+		foreach ($address_book as $fields) {
 			fputcsv($handle, $fields);
 		}
 	fclose($handle);
 }
-// $addressArray = loadCSV($address_book);
-// Name Field
-if (isset($_POST['personName']) && !empty($_POST['personName'])){
-    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
-} 
-// Address Field
-if (isset($_POST['address']) && !empty($_POST['address'])){
-    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
-} 
-// City Field
-if (isset($_POST['city']) && !empty($_POST['city'])){
-    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
-} 
-// State Field
-if (isset($_POST['state']) && !empty($_POST['state'])){
-    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
-} 
-// Zip Field
-if (isset($_POST['zip']) && !empty($_POST['zip'])){
-    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
-} 
-// Phone Field
-if (isset($_POST['phone']) && !empty($_POST['phone'])){
-    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
-} 
 
-if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
-//$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
+$address_book = loadCSV($filename);
+// Name Field
+if (!empty($_POST)){
+    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
+    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
+    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
+    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
+    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      	
+    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
+
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-	array_push($addressArray, $newEntryArray);
-	saveCSV($addressArray);
-	
+	array_push($address_book, $newEntryArray);
+	saveCSV($address_book);
+
 } else {
 	$errorMessage = "Required field empty.  Please complete your entry before submitting.";
 }
@@ -77,14 +59,14 @@ if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['
 	<p></p>
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
-			<? if (count($addressArray) > 0): ?>
+			<? if (count($address_book) > 0): ?>
 			
 			<table>
 				<tr>
 					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
 				</tr>
 			
-				<? foreach($addressArray as $field): ?>
+				<? foreach($address_book as $field): ?>
 					<? if (!empty($field)): ?>
 						<tr>
 							<? foreach ($field as $item): ?>
