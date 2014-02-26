@@ -3,6 +3,7 @@
 $address_book = "data/address_book.csv";
 $errorMessage = '';
 $addressArray = array();
+$newEntryArray = array();
 $personName = '';
 $address = '';
 $city = '';
@@ -10,15 +11,23 @@ $state = '';
 $zip = '';
 $phone = '';
 
+// function loadCSV($address_book){
+// 	$handle = fopen($address_book, "r");
+// 	$filesize = filesize($address_book);
+// 	$contents = fgetcsv($handle, $filesize);
+// 	fclose($handle);
+// }
+
 // created a function for saving a CSV file
 function saveCSV($addressArray){
-	$handle = fopen('$address_book', 'w');
+	$handle = fopen('data/address_book.csv', 'a');
 		// foreach ($address_book as $fields) {
 			fputcsv($handle, $addressArray);
 		// }
 	fclose($handle);
 }
 
+$addressArray = loadCSV($address_book);
 // Name Field
 if (isset($_POST['personName']) && !empty($_POST['personName'])){
     $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));
@@ -61,15 +70,13 @@ if (isset($_POST['phone']) && !empty($_POST['phone'])){
 
 if ((isset($_POST['personName']) && !empty($_POST['personName'])) && (isset($_POST['address']) && !empty($_POST['address'])) && (isset($_POST['city']) && !empty($_POST['city'])) && (isset($_POST['state']) && !empty($_POST['state'])) && (isset($_POST['zip']) && !empty($_POST['zip']))){
 
-$addressArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
-var_dump($addressArray);
-saveCSV($addressArray);
+//$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
+$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
 
+$addressArray = array_merge($addressArray, $newEntryArray);
+saveCSV($addressArray);
 }
 
-
-// header("Location: address_book.php");
-// exit;
 ?>
 
 <!DOCTYPE HTML>
@@ -86,7 +93,7 @@ saveCSV($addressArray);
 			<ul>
 				<? foreach($addressArray as $key => $field): ?>
 					<? if (!empty($field)): ?>
-					<tr><?= ($field); ?></tr>
+					<tr><?= ($field); ?>&nbsp; &nbsp;</tr>
 					<? endif; ?>
 				<? endforeach; ?>		
 			</ul>
