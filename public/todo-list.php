@@ -101,7 +101,7 @@ if (isset($_GET['remove'])) {
 			<ul>
 				<? foreach($items as $key => $item): ?>
 					<? if (!empty($item)): ?>
-					<li><?= ($item); ?> | <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
+					<li><?= ($item); ?> &nbsp;&nbsp;&nbsp; <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
 					<? endif; ?>
 				<? endforeach; ?>
 					
@@ -126,7 +126,7 @@ if (isset($_GET['remove'])) {
 				    </p>
 				</p>
 			</form>
-
+			<p> &copy; 2014 A Software Developer(MT) </p>
 	</body>
 </html>
 
