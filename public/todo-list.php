@@ -107,7 +107,6 @@ if (isset($_GET['remove'])) {
 					
 			</ul>
 
-
 			<form method="POST" action="">
 				<p> 
 					<p>
@@ -127,7 +126,7 @@ if (isset($_GET['remove'])) {
 				    </p>
 				</p>
 			</form>
-
+			
 	</body>
 </html>
 
