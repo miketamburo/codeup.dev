@@ -66,7 +66,7 @@ if (isset($saved_filename)) {
 
 // Add an item to the list
 if (isset($_POST['enter_item']) && !empty($_POST['enter_item'])){
-    $item = ucfirst($_POST['enter_item']);
+    $item = ucfirst(htmlspecialchars(strip_tags($_POST['enter_item'])));
     array_push($items, $item);
    
 	saveFile($filename, $items);    
@@ -101,7 +101,7 @@ if (isset($_GET['remove'])) {
 			<ul>
 				<? foreach($items as $key => $item): ?>
 					<? if (!empty($item)): ?>
-					<li><?= htmlspecialchars(strip_tags($item)); ?> | <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
+					<li><?= ($item); ?> | <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
 					<? endif; ?>
 				<? endforeach; ?>
 					
@@ -126,7 +126,7 @@ if (isset($_GET['remove'])) {
 				    </p>
 				</p>
 			</form>
-			
+
 	</body>
 </html>
 
