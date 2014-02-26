@@ -2,7 +2,10 @@
 // set file name of csv file and set variables
 $address_book = "data/address_book.csv";
 $errorMessage = '';
-$addressArray = array();
+$addressArray = [
+    ['The White House', '1600 Pennsylvania Avenue NW', 'Washington', 'DC', '20500'],
+    ['Marvel Comics', 'P.O. Box 1527', 'Long Island City', 'NY', '11101'],
+    ['LucasArts', 'P.O. Box 29901', 'San Francisco', 'CA', '94129-0901']];
 $newEntryArray = array();
 $personName = '';
 $address = '';
@@ -21,9 +24,9 @@ $phone = '';
 // created a function for saving a CSV file
 function saveCSV($addressArray){
 	$handle = fopen('data/address_book.csv', 'a');
-		// foreach ($address_book as $fields) {
-			fputcsv($handle, $addressArray);
-		// }
+		foreach ($addressArray as $fields) {
+			fputcsv($handle, $fields);
+		}
 	fclose($handle);
 }
 // $addressArray = loadCSV($address_book);
@@ -52,12 +55,12 @@ if (isset($_POST['phone']) && !empty($_POST['phone'])){
     $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
 } 
 
-//if ((isset($_POST['personName']) && !empty($_POST['personName'])) && (isset($_POST['address']) && !empty($_POST['address'])) && (isset($_POST['city']) && !empty($_POST['city'])) && (isset($_POST['state']) && !empty($_POST['state'])) && (isset($_POST['zip']) && !empty($_POST['zip']))){
 if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
 //$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-	$addressArray = array_merge($addressArray, $newEntryArray);
+	array_push($addressArray, $newEntryArray);
 	saveCSV($addressArray);
+	
 } else {
 	$errorMessage = "Required field empty.  Please complete your entry before submitting.";
 }
@@ -75,14 +78,24 @@ if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
 			<? if (count($addressArray) > 0): ?>
-			<ul>
-				<? foreach($addressArray as $key => $field): ?>
+			
+			<table>
+				<tr>
+					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
+				</tr>
+			
+				<? foreach($addressArray as $field): ?>
 					<? if (!empty($field)): ?>
-					<tr><?= ($field); ?>&nbsp; &nbsp;</tr>
+						<tr>
+							<? foreach ($field as $item): ?>
+								<td><?= $item; ?></td>
+							<? endforeach; ?>	
+						</tr>
 					<? endif; ?>
 				<? endforeach; ?>		
-			</ul>
-		<? else: ?>You have 0 entries.<? endif; ?>
+			</table>
+			
+			<? else: ?>You have 0 entries.<? endif; ?>
 	<hr/>
 	<? if (!empty($errorMessage)):?> <?=$errorMessage; endif; ?>
 	<p></p>
