@@ -1,7 +1,10 @@
 <?php
 // open and read a text file and return an array
 $newItems = array();
-$errorMessage = '';
+$errorMessage = "";
+$archiveArray = array();
+$archiveFile = "data/archivetodo.txt";
+$filename = "data/todoitems.txt";
 
 function loadFile($filename){
 	$handle = fopen($filename, "r");
@@ -26,7 +29,6 @@ function saveFile($filename, $items){
 	fclose($handle);
 }
 
-$filename = "data/todoitems.txt";
 $items = loadFile($filename);
 //File to upload script
 // Verify there were uploaded files and no errors
@@ -51,7 +53,8 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
 		$items = array_merge($items, $newItems);
 		saveFile($filename, $items);
 	}
-} else {
+
+} elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/plain') {
 	$errorMessage = "Error:  Text file not recognized.  Upload halted.";
 }
 
@@ -72,8 +75,13 @@ if (isset($_POST['enter_item']) && !empty($_POST['enter_item'])){
 // Remove an item from the list
 if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];
+// Save completed items to an archive file (AT THE END OF THE FILE)
+	$archiveArray = loadFile($archiveFile);
+	array_push($archiveArray, $items[$key]);
+	saveFile($archiveFile, $archiveArray);
+	
+// Remove item from list and save new todo list
 	unset($items[$key]);
-
 	saveFile($filename, $items);
 
 	header("Location: todo-list.php");
@@ -89,16 +97,16 @@ if (isset($_GET['remove'])) {
 </head>
 	<body>
 		<h2>TODO List</h2>
+			<p>Enter your item and choose your option.</p>	
 			<ul>
 				<? foreach($items as $key => $item): ?>
 					<? if (!empty($item)): ?>
 					<li><?= htmlspecialchars(strip_tags($item)); ?><a href="?remove=<?= $key; ?>">Mark Complete</a></li>
 					<? endif; ?>
-				
 				<? endforeach; ?>
+					
 			</ul>
 
-			<p>Enter your item or choose your option.</p>	
 
 			<form method="POST" action="">
 				<p> 
