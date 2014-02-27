@@ -19,6 +19,11 @@ $fileUploadError = '';
 // establish a class
 class AddressDataStore {
 	public $filename = '';
+	public $entries = array();
+
+	function __construct($filename = "data/address_book.csv"){
+		$this->filename = $filename;
+	}
 
 	function read_address_book() {
 		$contents = [];
@@ -37,17 +42,51 @@ class AddressDataStore {
 			}
 		fclose($handle);
 	}
+	// Push a new entry onto the $entries array
+	function addEntry(AddressEntry $entry){
 
-	function __construct($filename = "data/address_book.csv"){
-		$this->filename = $filename;
 	}
-	
+	// Remove a given entry from the $entries array
+	function removeEntry($index){
+		//Unset entry at $index
+	}
+	// Merge a second AddressDataStore into this one
+	function mergeAddressBooks(AddressDataStore $book) {
+
+	}	
+}
+
+class AddressEntry {
+	public $name;
+	public $address;
+	public $city;
+	public $state;
+	public $zip;
+	public $phone;
+
+	public $errors = array();
+
+	//Take in array from CSV or POST & assign values
+	function __construct(array $values = array()){
+
+	}
+
+	// Return boolean:  is entry valid?
+	function validate(){
+
+	}
+
+	// Return values as an array for CSV output
+	function getArray(){
+
+	}
+
 }
 $book = new AddressDataStore();
 
 $addresses_array = $book->read_address_book();
 
-
+if (isset($_POST))
 // Name Field
 if (isset($_POST['personName']) && !empty($_POST['personName'])){
     $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
