@@ -1,6 +1,13 @@
 <?php
-// set file name of csv file and set variables
+// set error string variables
+$nameError = '';
+$addressError = '';
+$cityError = '';
+$stateError = '';
+$zipError = '';
+$errorArray = array();
 $errorMessage = '';
+// set other variables
 $newEntryArray = array();
 $personName = '';
 $address = '';
@@ -8,48 +15,66 @@ $city = '';
 $state = '';
 $zip = '';
 $phone = '';
-$filename = "data/address_book.csv";
 
-function loadCSV($filename){
-	$contents = [];
-	$handle = fopen($filename, 'r');
-	while(($data = fgetcsv($handle)) !== FALSE) {
-  	$contents[] = $data;
-	}
-	fclose($handle);
-	return $contents;
-}
+class AddressDataStore {
+	public $filename = '';
 
-// created a function for saving a CSV file
-function saveCSV($address_book){
-	$handle = fopen('data/address_book.csv', 'w');
-		foreach ($address_book as $fields) {
-			fputcsv($handle, $fields);
+	function read_address_book($filename) {
+		$contents = [];
+		$handle = fopen($filename, 'r');
+		while(($data = fgetcsv($handle)) !== FALSE) {
+	  	$contents[] = $data;
 		}
-	fclose($handle);
-}
+		fclose($handle);
+		return $contents;
+	}
 
-$address_book = loadCSV($filename);
+	function write_address_book($addresses_array) {
+		$handle = fopen('data/address_book.csv', 'w');
+			foreach ($addresses_array as $fields) {
+				fputcsv($handle, $fields);
+			}
+		fclose($handle);
+	}
+	
+}
+$book = new AddressDataStore;
+
+$book->$filename = "data/address_book.csv";
+
+$addresses_array = $book->read_address_book($filename);
+
+
 // Name Field
 if (isset($_POST['personName']) && !empty($_POST['personName'])){
     $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
-} 
+} else {
+	$nameError = "The name field is required but empty.";
+}
 // Address Field
 if (isset($_POST['address']) && !empty($_POST['address'])){
     $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
-} 
+} else {
+	$addressError = "The address field is required but empty.";
+}
 // City Field
 if (isset($_POST['city']) && !empty($_POST['city'])){
     $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
-} 
+} else {
+	$cityError = "The city field is required but empty.";
+}
 // State Field
 if (isset($_POST['state']) && !empty($_POST['state'])){
     $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
-} 
+} else {
+	$stateError = "The state field is required but empty.";
+}
 // Zip Field
 if (isset($_POST['zip']) && !empty($_POST['zip'])){
     $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
-} 
+} else {
+	$zipError = "The zip field is required but empty.";
+}
 // Phone Field
 if (isset($_POST['phone']) && !empty($_POST['phone'])){
     $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
@@ -58,17 +83,19 @@ if (isset($_POST['phone']) && !empty($_POST['phone'])){
 if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
 //$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-	array_push($address_book, $newEntryArray);
-	saveCSV($address_book);
+	array_push($addresses_array, $newEntryArray);
+	write_address_book($addresses_array);
 
 } else {
-	$errorMessage = "Required field empty.  Please complete your entry before submitting.";
+	$errorMessageArray = [$nameError, $addressError, $cityError, $stateError, $zipError];
+	$errorMessage = implode("\n", $errorMessageArray);
 }
+
 if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];	
 // Remove item from list and save new todo list
-	unset($address_book[$key]);
-	saveCSV($address_book);
+	unset($addresses_array[$key]);
+	$book->write_address_book($addresses_array);
 
 	header("Location: address_book.php");
 	exit;	
@@ -86,14 +113,14 @@ if (isset($_GET['remove'])) {
 	<p></p>
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
-			<? if (count($address_book) > 0): ?>
+			<? if (count($addresses_array) > 0): ?>
 			
 			<table>
 				<tr>
 					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
 				</tr>
 			
-				<? foreach($address_book as $key => $field): ?>
+				<? foreach($addresses_array as $key => $field): ?>
 					<? if (!empty($field)): ?>
 						<tr>
 							<? foreach ($field as $item): ?>
