@@ -36,6 +36,10 @@ class AddressDataStore {
 			}
 		fclose($handle);
 	}
+
+	function __construct($filename = "data/address_book.csv"){
+		$this->filename = $filename;
+	}
 	
 }
 $book = new AddressDataStore();
@@ -159,6 +163,14 @@ if (isset($_GET['remove'])) {
 	    <p></p>
 	    <input type="submit" value="Update Address Book" />
 	</form>
+	<form method="POST" enctype="multipart/form-data" action="">
+				    <p>
+						<label for='fileUpLoad'> File to upload: </label>
+	        			<input id='fileUpLoad' name='fileUpLoad' type="file">
+	        			<input type="submit" value="Upload File" />
+				    </p>
+				</p>
+			</form>
 
 
 </body>
