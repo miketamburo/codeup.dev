@@ -15,6 +15,7 @@ $city = '';
 $state = '';
 $zip = '';
 $phone = '';
+$fileUploadError = '';
 // establish a class
 class AddressDataStore {
 	public $filename = '';
@@ -40,11 +41,13 @@ class AddressDataStore {
 	function __construct($filename = "data/address_book.csv"){
 		$this->filename = $filename;
 	}
+
+	function __destruct(){
+		echo "Class Dismissed!";
+	}
 	
 }
 $book = new AddressDataStore();
-
-$book->filename = "data/address_book.csv";
 
 $addresses_array = $book->read_address_book();
 
@@ -102,6 +105,23 @@ if (isset($_GET['remove'])) {
 
 	header("Location: address_book.php");
 	exit;	
+}
+
+if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUpLoad']['type'] == 'text/csv') {
+    // Set the destination directory for uploads
+    $upload_dir = '/vagrant/sites/codeup.dev/public/uploads/';
+    // Grab the filename from the uploaded file by using basename
+    $uploadfilename = basename($_FILES['fileUpLoad']['name']);
+    // Create the saved filename using the file's original name and our upload directory
+    $saved_filename = $upload_dir . $uploadfilename;
+    // Move the file from the temp location to our uploads directory
+    move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
+
+	$book->filename = ($saved_filename);
+	$addresses_array = $book->read_address_book();
+
+} elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/csv') {
+	$fileUploadError = "Error:  File is not a csv file.  Upload halted.";
 }
 
 ?>
@@ -169,9 +189,8 @@ if (isset($_GET['remove'])) {
 	        			<input id='fileUpLoad' name='fileUpLoad' type="file">
 	        			<input type="submit" value="Upload File" />
 				    </p>
-				</p>
-			</form>
-
+	</form>
+	<? if (!empty($fileUploadError)): ?><p style="color: red"><?=$fileUploadError ?></p><? endif; ?>
 
 </body>
 </html>
