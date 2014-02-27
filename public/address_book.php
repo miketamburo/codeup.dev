@@ -1,5 +1,5 @@
 <?php
-// set error string variables
+// set error variables
 $nameError = '';
 $addressError = '';
 $cityError = '';
@@ -15,13 +15,13 @@ $city = '';
 $state = '';
 $zip = '';
 $phone = '';
-
+// establish a class
 class AddressDataStore {
 	public $filename = '';
 
-	function read_address_book($filename) {
+	function read_address_book() {
 		$contents = [];
-		$handle = fopen($filename, 'r');
+		$handle = fopen($this->filename, 'r');
 		while(($data = fgetcsv($handle)) !== FALSE) {
 	  	$contents[] = $data;
 		}
@@ -30,7 +30,7 @@ class AddressDataStore {
 	}
 
 	function write_address_book($addresses_array) {
-		$handle = fopen('data/address_book.csv', 'w');
+		$handle = fopen($this->filename, 'w');
 			foreach ($addresses_array as $fields) {
 				fputcsv($handle, $fields);
 			}
@@ -38,11 +38,11 @@ class AddressDataStore {
 	}
 	
 }
-$book = new AddressDataStore;
+$book = new AddressDataStore();
 
-$book->$filename = "data/address_book.csv";
+$book->filename = "data/address_book.csv";
 
-$addresses_array = $book->read_address_book($filename);
+$addresses_array = $book->read_address_book();
 
 
 // Name Field
@@ -84,11 +84,10 @@ if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['
 //$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
 	array_push($addresses_array, $newEntryArray);
-	write_address_book($addresses_array);
+	$book->write_address_book($addresses_array);
 
 } else {
 	$errorMessageArray = [$nameError, $addressError, $cityError, $stateError, $zipError];
-	$errorMessage = implode("\n", $errorMessageArray);
 }
 
 if (isset($_GET['remove'])) {
@@ -132,8 +131,12 @@ if (isset($_GET['remove'])) {
 			</table>
 			
 			<? else: ?>You have 0 entries.<? endif; ?>
-	<hr/>
-	<? if (!empty($errorMessage)):?> <?=$errorMessage; endif; ?>
+	<hr>
+	<? if (!empty($errorMessageArray) && !empty($_POST)):?> 
+		<? foreach ($errorMessageArray as $message): ?>
+			<p style="color: red"><?=$message; ?></p>
+		<? endforeach; ?>
+	<? endif; ?>
 	<p></p>
 	<form method="POST" action="">
 		<label for='personName'> Name: </label>
