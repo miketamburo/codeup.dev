@@ -95,7 +95,7 @@ if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['
 
 if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];	
-// Remove item from list and save new todo list
+// Remove item from list and save new list
 	unset($addresses_array[$key]);
 	$book->write_address_book($addresses_array);
 
