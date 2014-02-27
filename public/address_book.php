@@ -41,10 +41,6 @@ class AddressDataStore {
 	function __construct($filename = "data/address_book.csv"){
 		$this->filename = $filename;
 	}
-
-	function __destruct(){
-		echo "Class Dismissed!";
-	}
 	
 }
 $book = new AddressDataStore();
@@ -123,6 +119,7 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
 } elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/csv') {
 	$fileUploadError = "Error:  File is not a csv file.  Upload halted.";
 }
+
 
 ?>
 
