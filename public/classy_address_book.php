@@ -35,20 +35,29 @@ class AddressDataStore {
 		return $contents;
 	}
 
-	function write_address_book($addresses_array) {
+	function write_address_book() {
 		$handle = fopen($this->filename, 'w');
-			foreach ($addresses_array as $fields) {
-				fputcsv($handle, $fields);
+			foreach ($this->entries as $entry) {
+				fputcsv($handle, $entry);
 			}
 		fclose($handle);
 	}
 	// Push a new entry onto the $entries array
 	function addEntry(AddressEntry $entry){
+		array_push($this->entries, $entry);
 
 	}
 	// Remove a given entry from the $entries array
 	function removeEntry($index){
-		//Unset entry at $index
+		if (isset($_GET[$index])) {
+		$this->$key = $_GET[$index];	
+	// Remove item from list and save new list
+		unset($entries[$this->$key]);
+		$this->write_address_book($entries);
+
+		header("Location: classy_address_book.php");
+		exit;	
+		}
 	}
 	// Merge a second AddressDataStore into this one
 	function mergeAddressBooks(AddressDataStore $book) {
@@ -73,7 +82,10 @@ class AddressEntry {
 
 	// Return boolean:  is entry valid?
 	function validate(){
-
+		$this->$fieldName = $fieldName;
+		if (!empty($_POST['$fieldName'])){
+			return TRUE;         
+		} 
 	}
 
 	// Return values as an array for CSV output
@@ -84,9 +96,8 @@ class AddressEntry {
 }
 $book = new AddressDataStore();
 
-$addresses_array = $book->read_address_book();
+$entries = $book->read_address_book();
 
-if (isset($_POST))
 // Name Field
 if (isset($_POST['personName']) && !empty($_POST['personName'])){
     $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
@@ -125,21 +136,11 @@ if (isset($_POST['phone']) && !empty($_POST['phone'])){
 if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
 //$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-	array_push($addresses_array, $newEntryArray);
-	$book->write_address_book($addresses_array);
+	array_push($entries, $newEntryArray);
+	$book->write_address_book($entries);
 
 } else {
 	$errorMessageArray = [$nameError, $addressError, $cityError, $stateError, $zipError];
-}
-
-if (isset($_GET['remove'])) {
-	$key = $_GET['remove'];	
-// Remove item from list and save new todo list
-	unset($addresses_array[$key]);
-	$book->write_address_book($addresses_array);
-
-	header("Location: address_book.php");
-	exit;	
 }
 
 if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUpLoad']['type'] == 'text/csv') {
@@ -153,7 +154,7 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 
 	$book->filename = ($saved_filename);
-	$addresses_array = $book->read_address_book();
+	$entries = $book->read_address_book();
 
 } elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/csv') {
 	$fileUploadError = "Error:  File is not a csv file.  Upload halted.";
@@ -171,14 +172,14 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
 	<p></p>
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
-			<? if (count($addresses_array) > 0): ?>
+			<? if (count($entries) > 0): ?>
 			
 			<table>
 				<tr>
 					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
 				</tr>
 			
-				<? foreach($addresses_array as $key => $field): ?>
+				<? foreach($entries as $key => $field): ?>
 					<? if (!empty($field)): ?>
 						<tr>
 							<? foreach ($field as $item): ?>
