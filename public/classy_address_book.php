@@ -16,87 +16,21 @@ $state = '';
 $zip = '';
 $phone = '';
 $fileUploadError = '';
-// establish a class
-class AddressDataStore {
-	public $filename = '';
-	public $entries = array();
 
+// TODO: require Filestore class
+require('filestore.php');
+
+
+class AddressDataStore extends Filestore {
 	function __construct($filename = "data/address_book.csv"){
 		$this->filename = $filename;
 	}
-
-	function read_address_book() {
-		$contents = [];
-		$handle = fopen($this->filename, 'r');
-		while(($data = fgetcsv($handle)) !== FALSE) {
-	  	$contents[] = $data;
-		}
-		fclose($handle);
-		return $contents;
-	}
-
-	function write_address_book() {
-		$handle = fopen($this->filename, 'w');
-			foreach ($this->entries as $entry) {
-				fputcsv($handle, $entry);
-			}
-		fclose($handle);
-	}
-	// Push a new entry onto the $entries array
-	function addEntry(AddressEntry $entry){
-		array_push($this->entries, $entry);
-
-	}
-	// Remove a given entry from the $entries array
-	function removeEntry($index){
-		if (isset($_GET[$index])) {
-		$this->$key = $_GET[$index];	
-	// Remove item from list and save new list
-		unset($entries[$this->$key]);
-		$this->write_address_book($entries);
-
-		header("Location: classy_address_book.php");
-		exit;	
-		}
-	}
-	// Merge a second AddressDataStore into this one
-	function mergeAddressBooks(AddressDataStore $book) {
-
-	}	
 }
 
-class AddressEntry {
-	public $name;
-	public $address;
-	public $city;
-	public $state;
-	public $zip;
-	public $phone;
+$book = new AddressDataStore("data/address_book.csv");
 
-	public $errors = array();
+$addresses_array = $book->read_csv();
 
-	//Take in array from CSV or POST & assign values
-	function __construct(array $values = array()){
-
-	}
-
-	// Return boolean:  is entry valid?
-	function validate(){
-		$this->$fieldName = $fieldName;
-		if (!empty($_POST['$fieldName'])){
-			return TRUE;         
-		} 
-	}
-
-	// Return values as an array for CSV output
-	function getArray(){
-
-	}
-
-}
-$book = new AddressDataStore();
-
-$entries = $book->read_address_book();
 
 // Name Field
 if (isset($_POST['personName']) && !empty($_POST['personName'])){
@@ -134,13 +68,27 @@ if (isset($_POST['phone']) && !empty($_POST['phone'])){
 } 
 
 if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
-//$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
+
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-	array_push($entries, $newEntryArray);
-	$book->write_address_book($entries);
+	
+	array_push($addresses_array, $newEntryArray);
+
+	$book->write_csv($addresses_array);
+
+
 
 } else {
 	$errorMessageArray = [$nameError, $addressError, $cityError, $stateError, $zipError];
+}
+
+if (isset($_GET['remove'])) {
+	$key = $_GET['remove'];	
+// Remove item from list and save new list
+	unset($addresses_array[$key]);
+	$book->write_csv($addresses_array);
+
+	header("Location: address_book.php");
+	exit;	
 }
 
 if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUpLoad']['type'] == 'text/csv') {
@@ -154,11 +102,12 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 
 	$book->filename = ($saved_filename);
-	$entries = $book->read_address_book();
+	$addresses_array = $book->read_csv();
 
 } elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/csv') {
 	$fileUploadError = "Error:  File is not a csv file.  Upload halted.";
 }
+
 
 ?>
 
@@ -172,14 +121,14 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
 	<p></p>
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
-			<? if (count($entries) > 0): ?>
+			<? if (count($addresses_array) > 0): ?>
 			
 			<table>
 				<tr>
 					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
 				</tr>
 			
-				<? foreach($entries as $key => $field): ?>
+				<? foreach($addresses_array as $key => $field): ?>
 					<? if (!empty($field)): ?>
 						<tr>
 							<? foreach ($field as $item): ?>
