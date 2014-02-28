@@ -27,7 +27,7 @@ class AddressDataStore extends Filestore {
 	}
 }
 
-$book = new AddressDataStore();
+$book = new AddressDataStore("data/address_book.csv");
 
 $addresses_array = $book->read_csv();
 
