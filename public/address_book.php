@@ -17,7 +17,7 @@ $zip = '';
 $phone = '';
 $fileUploadError = '';
 // establish a class
-include_once('Classes/address_data_store.php');
+require_once('Classes/address_data_store.php');
 
 $book = new AddressDataStore();
 
