@@ -16,12 +16,20 @@ $state = '';
 $zip = '';
 $phone = '';
 $fileUploadError = '';
-// establish a class
-require_once('Classes/address_data_store.php');
+
+// TODO: require Filestore class
+require('filestore.php');
+
+
+class AddressDataStore extends Filestore {
+	function __construct($filename = "data/address_book.csv"){
+		$this->filename = $filename;
+	}
+}
 
 $book = new AddressDataStore();
 
-$addresses_array = $book->read_address_book();
+$addresses_array = $book->read_csv();
 
 
 // Name Field
@@ -60,10 +68,14 @@ if (isset($_POST['phone']) && !empty($_POST['phone'])){
 } 
 
 if (!empty($_POST['personName']) && !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['zip'])){
-//$newEntryArray = ['personName' => $personName, 'address' => $address, 'city' => $city, 'state' => $state, 'zip' => $zip, 'phone' => $phone];
+
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
+	
 	array_push($addresses_array, $newEntryArray);
-	$book->write_address_book($addresses_array);
+
+	$book->write_csv($addresses_array);
+
+
 
 } else {
 	$errorMessageArray = [$nameError, $addressError, $cityError, $stateError, $zipError];
@@ -73,7 +85,7 @@ if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];	
 // Remove item from list and save new list
 	unset($addresses_array[$key]);
-	$book->write_address_book($addresses_array);
+	$book->write_csv($addresses_array);
 
 	header("Location: address_book.php");
 	exit;	
@@ -90,7 +102,7 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 
 	$book->filename = ($saved_filename);
-	$addresses_array = $book->read_address_book();
+	$addresses_array = $book->read_csv();
 
 } elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/csv') {
 	$fileUploadError = "Error:  File is not a csv file.  Upload halted.";
