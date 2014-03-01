@@ -60,13 +60,14 @@ if (isset($_POST)){
 	    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
 	} 
 }
-
+// if $errorString is empty then all fields have an entry (except: optional phone) and the file can be saved
 if (empty($errorString)){
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
 	array_push($addresses_array, $newEntryArray);
 	$book->write_csv($addresses_array);
 
 } else {
+// Create an error message array for user feedback	
 	$errorMessageArray = explode(' ', $errorString);
 }
 
@@ -75,11 +76,11 @@ if (isset($_GET['remove'])) {
 	// Remove item from list and save new list
 	unset($addresses_array[$key]);
 	$book->write_csv($addresses_array);
-	// reset page to home
+	// reset page to home location
 	header("Location: classy_address_book.php");
 	exit;	
 }
-
+// Check upload file size, load errors, and type.  If all tests pass, then save.
 if ((count($_FILES) > 0) && ($_FILES['fileUpLoad']['error'] == 0) && ($_FILES['fileUpLoad']['type'] == 'text/csv')) {
     $upload_dir = '/vagrant/sites/codeup.dev/public/uploads/';
     $uploadfilename = basename($_FILES['fileUpLoad']['name']);
@@ -105,7 +106,6 @@ if ((count($_FILES) > 0) && ($_FILES['fileUpLoad']['error'] == 0) && ($_FILES['f
 	<h3>Current Address Book Entries</h3>
 	<p> </p>
 			<? if (count($addresses_array) > 0): ?>
-			
 			<table>
 				<tr>
 					<td>Contact</td><td>Address</td><td>City</td><td>State</td><td>Zip Code</td><td>Phone Number</td>
