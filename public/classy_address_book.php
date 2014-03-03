@@ -24,57 +24,55 @@ class AddressDataStore extends Filestore {
 $book = new AddressDataStore("data/address_book.csv");
 
 $addresses_array = $book->read();
-
-if (isset($_POST)){
-	// Name Field
-	if (!empty($_POST['personName']) && (strlen($_POST['personName']) < 125)){
-	    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
-	} elseif (!empty($_POST['personName']) && strlen($_POST['personName']) > 125) {
-		throw new Exception ('Value is greater than 125 characters');
-	} else {
-		$errorString .= 'name ';		
-	}	
-	// Address Field
-	if (!empty($_POST['address']) && strlen($_POST['address']) < 125){
-	    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
-	} elseif (!empty($_POST['address']) && strlen($_POST['address']) > 125) {
-		throw new Exception ('Value is greater than 125 characters');
-	}  else {
-		$errorString .= 'address ';
-		
+try {	
+	if (isset($_POST)){
+		// Name Field
+		if (!empty($_POST['personName']) && (strlen($_POST['personName']) < 125)){
+		    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
+		} elseif (!empty($_POST['personName']) && strlen($_POST['personName']) > 125) {
+			throw new Exception ('Error value is greater than 125 characters');
+		} else {
+			$errorString .= 'name ';		
+		}	
+		// Address Field
+		if (!empty($_POST['address']) && strlen($_POST['address']) < 125){
+		    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
+		} elseif (!empty($_POST['address']) && strlen($_POST['address']) > 125) {
+			throw new Exception ('Error value is greater than 125 characters');
+		}  else {
+			$errorString .= 'address ';	
+		}
+		// City Field
+		if (!empty($_POST['city']) && strlen($_POST['city']) < 125){
+		    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
+		} elseif (!empty($_POST['city']) && strlen($_POST['city']) > 125) {
+			throw new Exception ('Error value is greater than 125 characters');
+		} else {
+			$errorString .= 'city ';	
+		}
+		// State Field
+		if (!empty($_POST['state']) && strlen($_POST['state']) < 125){
+		    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
+		} elseif (!empty($_POST['state']) && strlen($_POST['state']) > 125) {
+			throw new Exception ('Error value is greater than 125 characters');
+		} else {
+			$errorString .= 'state ';	
+		}
+		// Zip Field
+		if (!empty($_POST['zip']) && strlen($_POST['zip']) < 125){
+		    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
+		} elseif (!empty($_POST['zip']) && strlen($_POST['zip']) > 125) {
+			throw new Exception ('Error value is greater than 125 characters');
+		} else {
+			$errorString .= 'zip';	
+		}
+		// Phone Field
+		if (!empty($_POST['phone']) && strlen($_POST['phone']) < 125){
+		    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
+		} 
 	}
-	// City Field
-	if (!empty($_POST['city']) && strlen($_POST['city']) < 125){
-	    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
-	} elseif (!empty($_POST['city']) && strlen($_POST['city']) > 125) {
-		throw new Exception ('Value is greater than 125 characters');
-	} else {
-		$errorString .= 'city';
-		
-	}
-	// State Field
-	if (!empty($_POST['state']) && strlen($_POST['state']) < 125){
-	    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
-	} elseif (!empty($_POST['state']) && strlen($_POST['state']) > 125) {
-		throw new Exception ('Value is greater than 125 characters');
-	} else {
-		$errorString .= 'state';
-		
-	}
-	// Zip Field
-	if (!empty($_POST['zip']) && strlen($_POST['zip']) < 125){
-	    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
-	} elseif (!empty($_POST['zip']) && strlen($_POST['zip']) > 125) {
-		throw new Exception ('Value is greater than 125 characters');
-	} else {
-		$errorString .= 'zip';
-		
-	}
-	// Phone Field
-	if (!empty($_POST['phone']) && strlen($_POST['phone']) < 125){
-	    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));
-	       
-	} 
+} catch (Exception $e){
+	echo $e->getMessage() . PHP_EOL;
 }
 // if $errorString is empty then all fields have an entry (except: optional phone) and the file can be saved
 if (empty($errorString)){
