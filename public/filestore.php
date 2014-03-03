@@ -8,27 +8,27 @@ class Filestore {
 
 	public function __construct($filename = ''){
 		$this->filename = $filename;
-		if (substr($filename, -3)) == 'csv'){
-			$this->$is_csv = TRUE;
-		} elseif (substr($filename, -3)) == 'txt'){
-			$this->$is_csv = FALSE;
+		if (substr($filename, -3) == 'csv'){
+			$this->is_csv = TRUE;
+		} elseif (substr($filename, -3) == 'txt'){
+			$this->is_csv = FALSE;
 		} // consider later addition to address what happens if other file types
-		// are introduced.
+		// are introduced e.g. .jpg file.
 	}
 
 	public function read(){
-		if ($this->$is_csv == TRUE) {
-			$this->read_csv();
-		} elseif ($this->$is_csv == FALSE){
-			$this->read_lines();
+		if ($this->is_csv == TRUE) {
+			return $this->read_csv();
+		} elseif ($this->is_csv == FALSE){
+			return $this->read_lines();
 		}
 	}
 
 	public function write($array){
-		if ($this->$is_csv == TRUE) {
-			$this->write_csv();
-		} elseif ($this->$is_csv == FALSE){
-			$this->write_lines();
+		if ($this->is_csv == TRUE) {
+			return $this->write_csv($array);
+		} elseif ($this->is_csv == FALSE){
+			return $this->write_lines($array);
 		}
 	}
 
