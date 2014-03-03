@@ -29,40 +29,30 @@ try {
 		// Name Field
 		if (!empty($_POST['personName']) && (strlen($_POST['personName']) < 125)){
 		    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
-		} elseif (!empty($_POST['personName']) && strlen($_POST['personName']) > 125) {
-			throw new Exception ('Error value is greater than 125 characters');
 		} else {
 			$errorString .= 'name ';		
 		}	
 		// Address Field
 		if (!empty($_POST['address']) && strlen($_POST['address']) < 125){
 		    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
-		} elseif (!empty($_POST['address']) && strlen($_POST['address']) > 125) {
-			throw new Exception ('Error value is greater than 125 characters');
-		}  else {
+		} else {
 			$errorString .= 'address ';	
 		}
 		// City Field
 		if (!empty($_POST['city']) && strlen($_POST['city']) < 125){
 		    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
-		} elseif (!empty($_POST['city']) && strlen($_POST['city']) > 125) {
-			throw new Exception ('Error value is greater than 125 characters');
 		} else {
 			$errorString .= 'city ';	
 		}
 		// State Field
 		if (!empty($_POST['state']) && strlen($_POST['state']) < 125){
 		    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
-		} elseif (!empty($_POST['state']) && strlen($_POST['state']) > 125) {
-			throw new Exception ('Error value is greater than 125 characters');
 		} else {
 			$errorString .= 'state ';	
 		}
 		// Zip Field
 		if (!empty($_POST['zip']) && strlen($_POST['zip']) < 125){
 		    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
-		} elseif (!empty($_POST['zip']) && strlen($_POST['zip']) > 125) {
-			throw new Exception ('Error value is greater than 125 characters');
 		} else {
 			$errorString .= 'zip';	
 		}
@@ -71,18 +61,26 @@ try {
 		    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
 		} 
 	}
-} catch (Exception $e){
-	echo $e->getMessage() . PHP_EOL;
-}
 // if $errorString is empty then all fields have an entry (except: optional phone) and the file can be saved
-if (empty($errorString)){
-	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
-	array_push($addresses_array, $newEntryArray);
-	$book->write($addresses_array);
+	if (empty($errorString)){
+		$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
+		array_push($addresses_array, $newEntryArray);
+		$book->write($addresses_array);
 
-} else {
-// Create an error message array for user feedback	
-	$errorMessageArray = explode(' ', $errorString);
+	} else {
+	// Create an error message array for user feedback
+		$errorMessageArray = explode(' ', $errorString);
+		throw new Exception('Form submission error: ');	
+	}
+
+} catch (Exception $e){
+	if (!empty($_POST)){
+		echo $e->getMessage(); 
+		foreach ($errorMessageArray as $key => $value) {
+		 	echo "$value ";
+		 }
+		echo "fields are blank or greater than 125 characters.";
+	}
 }
 
 if (isset($_GET['remove'])) {
@@ -137,11 +135,11 @@ if ((count($_FILES) > 0) && ($_FILES['fileUpLoad']['error'] == 0) && ($_FILES['f
 					<? else: ?>You have 0 entries.<? endif; ?>
 			</table>	
 	<hr>
-	<? if (!empty($errorMessageArray) && !empty($_POST)):?> 
-		<? foreach ($errorMessageArray as $message): ?>
+<!-- 	<? //if (!empty($errorMessageArray) && !empty($_POST)):?> 
+		<? //foreach ($errorMessageArray as $message): ?>
 			<p><p style="color: red"> The (<?=$message; ?>) field is empty.  Please complete the form before updating the file.</p>
-		<? endforeach; ?>
-	<? endif; ?>
+		<? //endforeach; ?>
+	<? //endif; ?> -->
 	<p></p>
 	<form method="POST" action="">
 		<label for='personName'> Name: </label>
