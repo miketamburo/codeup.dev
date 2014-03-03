@@ -52,17 +52,21 @@ if (isset($saved_filename)) {
     echo "<p>You can download your file <a href='/uploads/{$filename}'>here</a>.</p>";
 }
 
-// Add an item to the list
-if (isset($_POST['enter_item'])){
+try {
+	// Add an item to the list
+	if (isset($_POST['enter_item'])){
 
-    $checkValue = $_POST['enter_item'];
-    if ((strlen($checkValue) < 240) && !empty($_POST['enter_item'])){
-    	$item = ucfirst(htmlspecialchars(strip_tags($checkValue)));
-    	array_push($items, $item);
-		$class->write($items);    
-    } else {
-    	throw new Exception ('No item entered or value is longer than 240 characters');
-    }   	   
+	    $checkValue = $_POST['enter_item'];
+	    if ((strlen($checkValue) < 240) && !empty($_POST['enter_item'])){
+	    	$item = ucfirst(htmlspecialchars(strip_tags($checkValue)));
+	    	array_push($items, $item);
+			$class->write($items);    
+	    } else {
+	    	throw new Exception ('No item entered or value is longer than 240 characters');
+	    }   	   
+	}
+} catch (Exception $e) {
+	echo $e->getMessage() . PHP_EOL;
 }
 
 // Remove an item from the list
