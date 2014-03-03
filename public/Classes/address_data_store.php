@@ -5,7 +5,7 @@ class AddressDataStore {
 
 	function __construct($filename = ''){
 		$this->filename = strtolower($filename);
-		parent::__construct($filename);
+		parent::__construct($this->filename);
 	}
 
 	function read_address_book() {
