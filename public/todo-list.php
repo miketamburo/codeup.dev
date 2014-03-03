@@ -8,10 +8,12 @@ $filename = "data/todoitems.txt";
 
 require_once('filestore.php');
 
+
+
 $class = new Filestore($filename);
 // Create array to hold list of todo items
 
-$items = $class->read_lines();
+$items = $class->read();
 
 
 //File to upload script
@@ -27,17 +29,17 @@ if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUp
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 
     $class2 = new Filestore($saved_filename);
-	$newItems = $class2->read_lines();
+	$newItems = $class2->read();
 
     if (isset($_POST['overwrite']) && ($_POST['overwrite']) == 'yes'){
     	$items = $newItems;
-    	$class->write_lines($items);
+    	$class->write($items);
 
     } elseif (!isset($_POST['overwrite'])){
 		
 		$items = array_merge($items, $newItems);
 		$class->filename = $filename;
-		$class->write_lines($items);
+		$class->write($items);
 	}
 
 } elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/plain') {
@@ -55,20 +57,20 @@ if (isset($_POST['enter_item']) && !empty($_POST['enter_item'])){
     $item = ucfirst(htmlspecialchars(strip_tags($_POST['enter_item'])));
     array_push($items, $item);
    
-	$class->write_lines($items);    
+	$class->write($items);    
 }
 
 // Remove an item from the list
 if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];
 // Save completed items to an archive file (AT THE END OF THE FILE)
-	$archiveArray = $class->read_lines($archiveFile);
+	$archiveArray = $class->read($archiveFile);
 	array_push($archiveArray, $items[$key]);
-	$class->write_lines($archiveFile);
+	$class->write($archiveFile);
 	
 // Remove item from list and save new todo list
 	unset($items[$key]);
-	$class->write_lines($items);
+	$class->write($items);
 
 	header("Location: todo-list.php");
 	exit;	
