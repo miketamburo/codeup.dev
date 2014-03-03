@@ -15,56 +15,72 @@ $fileUploadError = '';
 require('filestore.php');
 
 class AddressDataStore extends Filestore {
-	function __construct($filename = "data/address_book.csv"){
+	function __construct($filename){
 		$this->filename = $filename;
+		parent::__construct($this->filename);
 	}
 }
 
 $book = new AddressDataStore("data/address_book.csv");
 
-$addresses_array = $book->read_csv();
+$addresses_array = $book->read();
 
 if (isset($_POST)){
 	// Name Field
-	if (!empty($_POST['personName'])){
+	if (!empty($_POST['personName']) && (strlen($_POST['personName']) < 125)){
 	    $personName = ucwords(htmlspecialchars(strip_tags($_POST['personName'])));       
+	} elseif (!empty($_POST['personName']) && strlen($_POST['personName']) > 125) {
+		throw new Exception ('Value is greater than 125 characters');
 	} else {
-		$errorString .= 'name ';
-	}
+		$errorString .= 'name ';		
+	}	
 	// Address Field
-	if (!empty($_POST['address'])){
+	if (!empty($_POST['address']) && strlen($_POST['address']) < 125){
 	    $address = ucwords(htmlspecialchars(strip_tags($_POST['address'])));      
-	} else {
+	} elseif (!empty($_POST['address']) && strlen($_POST['address']) > 125) {
+		throw new Exception ('Value is greater than 125 characters');
+	}  else {
 		$errorString .= 'address ';
+		
 	}
 	// City Field
-	if (!empty($_POST['city'])){
+	if (!empty($_POST['city']) && strlen($_POST['city']) < 125){
 	    $city = ucwords(htmlspecialchars(strip_tags($_POST['city'])));      
+	} elseif (!empty($_POST['city']) && strlen($_POST['city']) > 125) {
+		throw new Exception ('Value is greater than 125 characters');
 	} else {
-		$errorString .= 'city ';
+		$errorString .= 'city';
+		
 	}
 	// State Field
-	if (!empty($_POST['state'])){
+	if (!empty($_POST['state']) && strlen($_POST['state']) < 125){
 	    $state = ucwords(htmlspecialchars(strip_tags($_POST['state'])));       
+	} elseif (!empty($_POST['state']) && strlen($_POST['state']) > 125) {
+		throw new Exception ('Value is greater than 125 characters');
 	} else {
-		$errorString .= 'state ';
+		$errorString .= 'state';
+		
 	}
 	// Zip Field
-	if (!empty($_POST['zip'])){
+	if (!empty($_POST['zip']) && strlen($_POST['zip']) < 125){
 	    $zip = (htmlspecialchars(strip_tags($_POST['zip'])));      
+	} elseif (!empty($_POST['zip']) && strlen($_POST['zip']) > 125) {
+		throw new Exception ('Value is greater than 125 characters');
 	} else {
 		$errorString .= 'zip';
+		
 	}
 	// Phone Field
-	if (!empty($_POST['phone'])){
-	    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));      
+	if (!empty($_POST['phone']) && strlen($_POST['phone']) < 125){
+	    $phone = (htmlspecialchars(strip_tags($_POST['phone'])));
+	       
 	} 
 }
 // if $errorString is empty then all fields have an entry (except: optional phone) and the file can be saved
 if (empty($errorString)){
 	$newEntryArray = [$personName, $address, $city, $state, $zip, $phone];
 	array_push($addresses_array, $newEntryArray);
-	$book->write_csv($addresses_array);
+	$book->write($addresses_array);
 
 } else {
 // Create an error message array for user feedback	
@@ -75,7 +91,7 @@ if (isset($_GET['remove'])) {
 	$key = $_GET['remove'];	
 	// Remove item from list and save new list
 	unset($addresses_array[$key]);
-	$book->write_csv($addresses_array);
+	$book->write($addresses_array);
 	// reset page to home location
 	header("Location: classy_address_book.php");
 	exit;	
@@ -87,7 +103,7 @@ if ((count($_FILES) > 0) && ($_FILES['fileUpLoad']['error'] == 0) && ($_FILES['f
     $saved_filename = $upload_dir . $uploadfilename;
     move_uploaded_file($_FILES['fileUpLoad']['tmp_name'], $saved_filename);
 	$book->filename = ($saved_filename);
-	$addresses_array = $book->read_csv();
+	$addresses_array = $book->read();
 
 } elseif (isset($_FILES['fileUpLoad']) && $_FILES['fileUpLoad']['type'] != 'text/csv') {
 	$fileUploadError = "Error:  File is not a csv file.  Upload halted.";
