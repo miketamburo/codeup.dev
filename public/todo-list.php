@@ -53,11 +53,16 @@ if (isset($saved_filename)) {
 }
 
 // Add an item to the list
-if (isset($_POST['enter_item']) && !empty($_POST['enter_item'])){
-    $item = ucfirst(htmlspecialchars(strip_tags($_POST['enter_item'])));
-    array_push($items, $item);
-   
-	$class->write($items);    
+if (isset($_POST['enter_item'])){
+
+    $checkValue = $_POST['enter_item'];
+    if ((strlen($checkValue) < 240) && !empty($_POST['enter_item'])){
+    	$item = ucfirst(htmlspecialchars(strip_tags($checkValue)));
+    	array_push($items, $item);
+		$class->write($items);    
+    } else {
+    	throw new Exception ('No item entered or value is longer than 240 characters');
+    }   	   
 }
 
 // Remove an item from the list
