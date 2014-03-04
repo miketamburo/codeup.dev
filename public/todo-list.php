@@ -64,13 +64,12 @@ try {
 	    	array_push($items, $item);
 			$class->write($items);    
 	    } else {
-	    	throw new InvalidEntryException ('No item entered or value is longer than 240 characters');
+	    	throw new InvalidInputException ('No item entered or value is longer than 240 characters');
 	    }   	   
 	}
-} catch (InvalidEntryException $e) {
-	echo $e->getMessage() . PHP_EOL;
+} catch (InvalidInputException $e) {
 	if (empty($_POST['enter_item'])){
-		header("Location: todo-list.php");
+		echo $e->getMessage() . PHP_EOL;
 	}
 	
 }
