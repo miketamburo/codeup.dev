@@ -8,7 +8,9 @@ $filename = "data/todoitems.txt";
 
 require_once('filestore.php');
 
+class InvalidInputException extends Exception{
 
+}
 
 $class = new Filestore($filename);
 // Create array to hold list of todo items
@@ -62,11 +64,15 @@ try {
 	    	array_push($items, $item);
 			$class->write($items);    
 	    } else {
-	    	throw new Exception ('No item entered or value is longer than 240 characters');
+	    	throw new InvalidEntryException ('No item entered or value is longer than 240 characters');
 	    }   	   
 	}
-} catch (Exception $e) {
+} catch (InvalidEntryException $e) {
 	echo $e->getMessage() . PHP_EOL;
+	if (empty($_POST['enter_item'])){
+		header("Location: todo-list.php");
+	}
+	
 }
 
 // Remove an item from the list
