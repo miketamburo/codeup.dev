@@ -14,6 +14,9 @@ $fileUploadError = '';
 
 require('filestore.php');
 
+class InvalidEntryException extends Exception{
+}
+
 class AddressDataStore extends Filestore {
 	function __construct($filename){
 		$this->filename = $filename;
@@ -70,10 +73,10 @@ try {
 	} else {
 	// Create an error message array for user feedback
 		$errorMessageArray = explode(' ', $errorString);
-		throw new Exception('Form submission error: ');	
+		throw new InvalidEntryException('Form submission error: ');	
 	}
 
-} catch (Exception $e){
+} catch (InvalidEntryException $e){
 	if (!empty($_POST)){
 		echo $e->getMessage(); 
 		foreach ($errorMessageArray as $key => $value) {
@@ -135,6 +138,7 @@ if ((count($_FILES) > 0) && ($_FILES['fileUpLoad']['error'] == 0) && ($_FILES['f
 					<? else: ?>You have 0 entries.<? endif; ?>
 			</table>	
 	<hr>
+	<!-- Removed when exceptions added - left in code for reference how-to only -->
 <!-- 	<? //if (!empty($errorMessageArray) && !empty($_POST)):?> 
 		<? //foreach ($errorMessageArray as $message): ?>
 			<p><p style="color: red"> The (<?=$message; ?>) field is empty.  Please complete the form before updating the file.</p>
