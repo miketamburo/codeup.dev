@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+		// Create an array of object that represent books.
+		// Each book should have a title and an author.
+		// The book author should be an object with a firstName and lastName.
+		// Be creative and add at least 5 books to the array
+		var books = [
+			{"title": 'Who Ate The Cake',
+			"author": {
+				"firstName": "Robot",
+				"lastName": "Baker"
+				}
+			},
+			{"title": 'Learning to Code',
+			"author": {
+				"firstName": "Keith",
+				"lastName": "Knowns"
+				}
+			},
+			{"title": 'What Now',
+			"author": {
+				"firstName": "Chuck",
+				"lastName": "Lately"
+				}
+			},
+			{"title": 'Eat, Sleep, Code!',
+			"author": {
+				"firstName": "Walter",
+				"lastName": "Townsend"
+				}
+			},
+			{"title": 'Apple 101',
+			"author": {
+				"firstName": "K. J.",
+				"lastName": "Lipinski"
+				}
+			}
+		];
+
+		// log out the books array
+		console.log(books);
+
+		// Loop through the array of books using .forEach and print out the specified information about each one.
+		function logArrayElements(element, index, array){
+			console.log("Book #" + index);
+		    console.log("Title: " + element.title);
+		    console.log("Author: " + element.author.firstName + " " +element.author.lastName);
+		    console.log("---");
+		}
+
+		books.forEach(logArrayElements);
+		// end loop here
+
+		// books.forEach(function (element, index, books){
+		//     console.log("Book #" + index);
+		//     console.log("Title: " + element.title);
+		//     console.log("Author: " + element.author.firstName + " " + element.author.lastName);
+		//     console.log("---");
+		// });
+
+	</script>
+</body>
+</html>
