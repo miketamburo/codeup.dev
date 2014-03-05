@@ -95,11 +95,12 @@ if (isset($_GET['remove'])) {
 <!DOCTYPE html>
 <html>
 <head>
+	<link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC' rel='stylesheet' type='text/css'>
 	<title>TODO List</title>
 	<link rel="stylesheet" href="css/todo_site.css">
 </head>
 	<body>
-		<h2 class=center>TODO List</h2>
+		<h2 class=center>To Do List</h2>
 			<p class=center>Enter your item and choose your option.</p>
 			<? if (count($items) > 0): ?>	
 			<ul>
