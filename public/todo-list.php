@@ -96,10 +96,11 @@ if (isset($_GET['remove'])) {
 <html>
 <head>
 	<title>TODO List</title>
+	<link rel="stylesheet" href="css/todo_site.css">
 </head>
 	<body>
-		<h2>TODO List</h2>
-			<p>Enter your item and choose your option.</p>
+		<h2 class=center>TODO List</h2>
+			<p class=center>Enter your item and choose your option.</p>
 			<? if (count($items) > 0): ?>	
 			<ul>
 				<? foreach($items as $key => $item): ?>
@@ -129,7 +130,7 @@ if (isset($_GET['remove'])) {
 				    </p>
 				</p>
 			</form>
-			<p> &copy; 2014 A Software Developer(MT) </p>
+			<p id="bottomAlign"> &copy; 2014 A Software Developer(MT) </p>
 	</body>
 </html>
 
