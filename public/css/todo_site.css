@@ -1,0 +1,52 @@
+/* 
+this content is stored in a file named "todo_site.css" 
+in a directory named "css" in the web root 
+*/
+
+.center {
+	text-align: center;
+	font-size: 20px;
+	font-size: 40px;
+}
+
+body {
+	background-color: #AAD3E3;
+}
+
+h2 {
+    color: #212362;
+    text-decoration: underline;
+    font-family: serif;
+}
+
+a {
+	float: absolute;	
+}
+
+a:link {
+	color: #81C95E;
+}
+
+a:hover {
+	color: red;
+}
+
+ul {
+	text-indent: 12px;
+	list-style: disc;
+	text-align: left;
+	font-size: 20px;
+}
+
+#bottomAlign {
+	float: absolute;
+}
+
+label, input {
+	font-family: serif;
+	font-size: 20px;
+}
+
+input:hover {
+	color: red;
+}
