@@ -1,117 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Positioning Exercise</title>
+	<title>Box Model Exercise</title>
 	<style>
 		.box {
 			height: 50px;
 			width: 50px;
-			margin-top: 50px;
 			border: solid 1px #000;
-			padding: 10px;	
+			padding: 10px;
+			background-color: #F00;
 		}
-
-		div.image {
-			background-image: url(img/codeup-arrow.png);
-		}
-
-		body{
-			background-image: url(img/codeup-ribbon.png);
-			background-repeat: no-repeat;
-			background-position: right;
-			float: left;
-		}
-
 		h1{
 			font-weight: bold;
+			margin-top: 0px;
+			margin-bottom: 0px;
 		}
-
 		p {
 			color: #FFF;
 			font-weight: bold;
-			
 		}
 
-		div {
-			position: relative;
+		div{
+			margin-top: 50px;
 		}
 
-		#container{
-			width: auto;
-			height: auto;
+		div>img{
+			position: absolute;
+			top: -40px;
+			right: -40px;
+		}
+
+		img {
+			position: fixed;
+			right: 0px;
+		}
+
+		body{
+			margin-top: 0px;
 		}
 
 		#red {
 			background-color: #F00;
-			float: left;	
+			float: left;
+			position: relative;
 		}
-
 		#orange {
 			background-color: #FFA528 ;
-			margin-left: 30px;	
-			float: left;	
-		}
+			margin-left: 50px;
+			float: left;
+			position: relative;
 
+		}
 		#yellow {
 			background-color: #FFF41E;
-			margin-left: 30px;
-			float: left;				
+			margin-left: 50px;
+			float: left;
+			position: relative;
 		}
-
 		#green {
 			background-color: #0F0;
-			margin-left: 30px;
-			clear: top;	
 			float: left;
+			clear: left;
 			position: relative;
-			top: 122px;
-			right: 300px;
 		}
-
 		#blue{
 			background-color: #00F;
-			margin-left: 30px;
+			margin-left: 50px;
 			float: left;
 			position: relative;
-			top: 122px;	
-			right: 300px;	
 		}
-
 		#violet{
 			background-color: #F0F;
-			margin-left: 30px;
+			margin-left: 50px;
 			float: left;
 			position: relative;
-			top: 122px;	
-			right: 300px;
-			
 		}
-
 
 	</style>
 </head>
-<body class="ribbon">
+<body>
+	<img src="img/codeup-ribbon" alt="codeup ribbon">
 	<h1><a href="http://en.wikipedia.org/wiki/Visible_spectrum">Visible Spectrum Wavelengths</a></h1>
-	<div>
-		<div class="box" class="image" id="red">
+		<div class="box" id="red">
+			<img src="img/codeup-arrow.png" alt="codeup arrow">
 			<p>620-750 nm</p>
 		</div>
 		<div class="box" id="orange">
+			<img src="img/codeup-arrow.png" alt="codeup arrow">
 			<p>590-620 nm</p>
 		</div>
 		<div class="box" id="yellow">
+			<img src="img/codeup-arrow.png" alt="codeup arrow">
 			<p>570-590 nm</p>
 		</div>
 		<div class="box" id="green">
+			<img src="img/codeup-arrow.png" alt="codeup arrow">
 			<p>495-570 nm</p>
 		</div>
 		<div class="box" id="blue">
+			<img src="img/codeup-arrow.png" alt="codeup arrow">
 			<p>450-495 nm</p>
 		</div>
 		<div class="box" id="violet">
+			<img src="img/codeup-arrow.png" alt="codeup arrow">
 			<p>380-450 nm</p>
 		</div>
-	</div>
 
 </body>
 </html>
