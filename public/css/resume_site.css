@@ -1,10 +1,16 @@
 /* 
-this content is stored in a file named "site.css" 
+this content is stored in a file named "css/resume_site.css" 
 in a directory named "css" in the web root 
 */
+body{ 
+	padding-top: 70px;
+	padding-bottom: 70px; 
+}
+
 .whiteletters{
 	color: #FFF;
 }
+
 
 #fancy{
     color: #FFF;
