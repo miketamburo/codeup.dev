@@ -11,6 +11,10 @@ in a directory named "css" in the web root
 	margin-right: auto;
 }
 
+.shadow{
+	text-shadow: 2px 0px 25px #000;
+}
+
 .whiteletters{
 	color: #FFF;
 }
