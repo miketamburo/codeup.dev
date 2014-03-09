@@ -1,0 +1,158 @@
+<!--PAL IT!  The idea behind Pal it! (a play on Pallet) is to allow a user to upload a file and then determine what color/shade/etc. a color on the image is.  The idea for this was given to me by a teenage who wanted to match her skin tone to a makeup color.  Have a friend take your photo, upload the photo, and match your color - PAL it!  Although I don't forsee matching makeup color brands, I hope to use this to inspire my teenager's interest in technical solutions vs just wanting to pay $$$ to have skin tones matched by a computer that is most likely performing a variant of this thought process. The color picker code was adapted from the stackoverflow community and bootstrap was used to put this together quickly.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Michael Tamburo's Portfolio">
+    <meta name="author" content="Michael Tamburo">
+    
+	<title>Pal it!</title>
+
+    <link rel="shortcut icon" href="/css/bootstrap-3.1.1/docs/assets/ico/favicon.ico">
+	<link href="/css/bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet" >
+	<link href="/css/bootstrap-3.1.1/docs/examples/carousel/carousel.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<link href="/css/palit.css" rel="stylesheet">
+</head>
+<!-- NAVBAR ============================================================================ -->
+<body>
+
+    <div class="navbar-wrapper">
+      
+      <div class="container">
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          
+          <div class="container">
+
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button><h3><em><a class="whiteletters" class="navbar-brand" href="#">Pal it!</a></em></h3>
+            </div>
+            <!-- End of navbar header ===========-->
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+		          <li>
+		            <a href="http://www.facebook.com/">
+		              <i class="fa fa-facebook-square fa-2x"></i>
+		            </a>
+		          </li>
+		          <li>
+		            <a href="http://www.twitter.com/">
+		              <i class="fa fa-twitter-square fa-2x"></i>
+		            </a>
+		          </li>
+          	  </ul>
+
+            </div>
+            <!-- End of navbar collapse info ===========-->
+          </div><!-- /. container ========-->
+        </div>
+        <!-- End of Navbar features ================-->
+      </div>
+    </div><!-- End of Navbar Wrapper =================-->
+
+      <p><a id="profile"></a></p>
+      <hr class="bottomMargin" class="featurette-divider">
+<!-- ================================================== -->
+<div class="autoMargin" class="padding" class="container-fluid">
+<div class="padding" class="row">
+  <div class="col-md-6">
+      <canvas id="myCanvas" width="300" height="300" style="border:5px solid #000;">
+
+      </canvas>
+      <script src='jquery/jquery.js'></script>
+
+      <script type="text/javascript">
+          window.onload = function(){
+              var canvas = document.getElementById('myCanvas');
+              var context = canvas.getContext('2d');
+              var img = new Image();
+              img.src = "img/garden.jpg";
+              context.drawImage(img, 0, 0);
+          };
+
+          function findPos(obj){
+          var current_left = 0, current_top = 0;
+          if (obj.offsetParent){
+              do{
+                  current_left += obj.offsetLeft;
+                  current_top += obj.offsetTop;
+              }while(obj = obj.offsetParent);
+              return {x: current_left, y: current_top};
+          }
+          return undefined;
+          }
+
+          function rgbToHex(r, g, b){
+          if (r > 255 || g > 255 || b > 255)
+              throw "Invalid color component";
+          return ((r << 16) | (g << 8) | b).toString(16);
+          }
+
+      $('#myCanvas').click(function(e){
+          var position = findPos(this);
+          var x = e.pageX - position.x;
+          var y = e.pageY - position.y;
+          var coordinate = "x=" + x + ", y=" + y;
+          var canvas = this.getContext('2d');
+          var p = canvas.getImageData(x, y, 1, 1).data;
+          var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+          alert("HEX: " + hex);
+      });
+      </script>
+<!-- NEED TO ADD CODE TO UPLOAD FILE AND ASSIGN IT TO A VARIABLE NAME THAT WILL REPLACE THE IMAGE SOURCE IN THE CANVAS.  CONSIDERING CONVERTING THE ALERT TO A FUNCTION THAT WILL REFERENCE A TABLE AND GIVE THE USER A CSS COLOR NAME VS A NUMBER. Per my comment above, the look-up table could be CSS colors, make-up shades, crayon colors, etc. that are the closest match. -->
+      <div>
+        <ol>
+          <li>Upload your "jpg" photo to the canvas.</li>
+            <form method="POST" enctype="multipart/form-data" action="">
+              <p>
+                <label for='fileUpLoad'> File to upload: </label>
+                    <input id='fileUpLoad' name='fileUpLoad' type="file">
+                    <p></p>
+                    <input type="submit" value="Upload File" />
+              </p>
+            </form>
+          <li>Scroll your cursor over your photo.</li>
+          <li>Click and your cursor will pick your color.</li>
+        </ol>
+      </div>
+  </div>
+  <div class="padding" class="col-md-6">
+    <img src="img/garden.jpg"/>
+    <p>Sample Color Pallet</p>
+  </div>
+</div>
+</div>
+
+<!-- ================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+          
+    <div class="container">
+
+      <!-- FOOTER ==================================-->
+      <footer>
+        <p class="whiteletters">&copy; 2014 Michael Tamburo All rights reserved.</p>
+      </footer>
+
+    </div><!-- /.container -->
+
+</div>
+    <!-- Bootstrap core JavaScript ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="css/bootstrap-3.1.1/js/bootstrap.min.js"></script>
+    <script src="css/bootstrap-3.1.1/docs/assets/js/docs.min.js"></script>
+  </body>
+</html>
