@@ -1,4 +1,5 @@
 <?php
+// The todo list project.
 // open and read a text file and return an array
 $newItems = array();
 $errorMessage = "";
@@ -18,8 +19,8 @@ $class = new Filestore($filename);
 $items = $class->read();
 
 
-//File to upload script
-// Verify there were uploaded files and no errors
+	//File to upload script
+	// Verify there were uploaded files and no errors
 if (count($_FILES) > 0 && $_FILES['fileUpLoad']['error'] == 0 && $_FILES['fileUpLoad']['type'] == 'text/plain') {
     // Set the destination directory for uploads
     $upload_dir = '/vagrant/sites/codeup.dev/public/uploads/';
@@ -100,16 +101,18 @@ if (isset($_GET['remove'])) {
 	<link rel="stylesheet" href="css/todo_site.css">
 </head>
 	<body>
-		<h2 class=center>To Do List</h2>
+		<h2 class=center><em>To Do List</em></h2>
 			<p class=center>Enter your item and choose your option.</p>
 			<? if (count($items) > 0): ?>	
-			<ul>
-				<? foreach($items as $key => $item): ?>
-					<? if (!empty($item)): ?>
-					<li><?= ($item); ?> &nbsp;&nbsp;&nbsp; <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
-					<? endif; ?>
-				<? endforeach; ?>		
-			</ul>
+			<div>
+				<ul>
+					<? foreach($items as $key => $item): ?>
+						<? if (!empty($item)): ?>
+						<li><?= ($item); ?> &nbsp;&nbsp;&nbsp; <a href="?remove=<?= $key; ?>">Mark Complete</a></li>
+						<? endif; ?>
+					<? endforeach; ?>		
+				</ul>
+			</div>
 		<? else: ?>You have 0 TODO Items<? endif; ?>
 
 			<form method="POST" action="">
@@ -131,7 +134,7 @@ if (isset($_GET['remove'])) {
 				    </p>
 				</p>
 			</form>
-			<p id="bottomAlign"> &copy; 2014 A Software Developer(MT) </p>
+			<p id="bottomAlign"> &copy; 2014 Mike Tamburo All rights reserved.</p>
 	</body>
 </html>
 

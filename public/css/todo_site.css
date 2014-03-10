@@ -2,33 +2,22 @@
 this content is stored in a file named "todo_site.css" 
 in a directory named "css" in the web root 
 */
-
-.center {
-	text-align: center;
-	font-size: 30px;
-	font-family: 'Alegreya Sans SC', sans-serif;
-}
-
-body {
-	background-color: #AAD3E3;
-}
-
-h2 {
-    color: #212362;
-    text-decoration: underline;
-    font-family: serif;
-}
-
-a {
-	float: absolute;	
-}
-
 a:link {
 	color: #81C95E;
 }
 
 a:hover {
 	color: red;
+}
+
+body {
+	background-color: #CEF5e4;
+}
+
+h2 {
+    color: #212362;
+    text-decoration: underline;
+    font-family: 'Alegreya Sans SC', sans-serif;
 }
 
 ul {
@@ -38,10 +27,6 @@ ul {
 	font-size: 20px;
 }
 
-#bottomAlign {
-	float: absolute;
-}
-
 label, input {
 	font-family: serif;
 	font-size: 20px;
@@ -49,4 +34,10 @@ label, input {
 
 input:hover {
 	color: red;
+}
+
+.center {
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Alegreya Sans SC', sans-serif;
 }
