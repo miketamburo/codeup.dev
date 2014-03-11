@@ -15,8 +15,9 @@ in a directory named "css" in the web root
 .bottomMargin{
 	margin-bottom: 50px;
 }
-.padding {
-	padding-top: 40px;
+.main-content {
+	margin-top: 90px;
+	padding-top: 20px;
 }
 
 .shadow{
