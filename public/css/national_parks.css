@@ -1,0 +1,20 @@
+/* 
+this content is stored in a file named "css/resume_site.css" 
+in a directory named "css" in the web root 
+*/
+
+.padding{ 
+	margin-top: 20px;
+	padding-top: 40px;
+	background-color: #ECFFBE;
+}
+
+.whiteletters{
+	color: #FFF;
+}
+
+#bottommargin{
+	margin-bottom: 0px;
+}
+
+
