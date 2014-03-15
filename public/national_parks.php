@@ -16,7 +16,19 @@ if (isset($_GET['sort_col']) && isset($_GET['sort_order'])){
 } else {
   $result = $mysqli->query("SELECT * FROM national_parks"); 
 }
+// prepared statements
+// $stmt = $mysqli->prepare("SELECT name, location, description, date_established, area_in_acres FROM national_parks 
+//   WHERE name = ?, location = ?, description = ?, date_established = ?, area_in_acres = ?");
 
+// $stmt->bind_param("ssssd", 'name', 'location', 'description', 'date_established', 'area_in_acres');
+
+// $stmt->execute();
+
+// $stmt->bind_result($name, $location, $description, $date_established, $area_in_acres);
+// // code for html section
+// while ($stmt->fetch()){
+//   echo $name . PHP_EOL;
+// }
 
 ?>
 
@@ -61,6 +73,27 @@ if (isset($_GET['sort_col']) && isset($_GET['sort_order'])){
     </div><!-- End of Navbar Wrapper =================-->
 <!-- ================================================== -->
 <div class="padding">
+  <div>
+      <ul class="nav nav-tabs">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            Add A Park!<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Park Name">
+                <input type="text" class="form-control" placeholder="Location">
+                <input type="text" class="form-control" placeholder="Description">
+                <input type="text" class="form-control" placeholder="Date est. YYYY-MM-DD">
+                <input type="text" class="form-control" placeholder="Area In Acres">
+              </div>
+              <button type="submit" class="btn btn-default">Apply Info</button>
+            </form>
+          </ul>
+        </li>
+      </ul>
+  </div>  
   <table class="table">
       <tr>
           <th scope="col">Number</th>
@@ -89,8 +122,6 @@ if (isset($_GET['sort_col']) && isset($_GET['sort_order'])){
           <td><?=$row['area_in_acres']; ?></td>
         </tr>
       <? endwhile; ?>
-
-
   </table>
 </div>
 
