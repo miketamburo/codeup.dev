@@ -36,7 +36,7 @@ if ((!empty($_POST['name'])) &&
   $errorMsg = "Error:  Unable to update the list due to an empty field submission.";
 } 
 
-///// GET VALIDATION CODE 
+///// BEGIN VALIDATION CODE 
 $validCols = array('name', 'location', 'date_established');
 
 $sortCol = 'name';
@@ -54,8 +54,6 @@ if (isset($_GET['sort_order']) && $_GET['sort_order'] == 'DESC')
 
 $result = $mysqli->query("SELECT * FROM national_parks ORDER BY $sortCol $sortOrd");
 ///// END VALIDATION CODE
-
-
 
 ?>
 
