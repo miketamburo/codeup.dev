@@ -132,17 +132,17 @@ $result = $mysqli->query("SELECT * FROM national_parks ORDER BY $sortCol $sortOr
   <table class="table">
       <tr>
           <th scope="col">Name
-              <a href="?sort_col=name&sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
-              <a href="?sort_col=name&sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
+              <a href="?sort_col=name&amp;sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
+              <a href="?sort_col=name&amp;sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
           </th>
           <th scope="col">Location
-              <a href="?sort_col=location&sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
-              <a href="?sort_col=location&sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
+              <a href="?sort_col=location&amp;sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
+              <a href="?sort_col=location&amp;sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
           </th>
           <th scope="col">Description</th>
           <th scope="col">Date Established
-              <a href="?sort_col=date_established&sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
-              <a href="?sort_col=date_established&sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
+              <a href="?sort_col=date_established&amp;sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
+              <a href="?sort_col=date_established&amp;sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
           </th>
           <th scope="col">Area in Acres</th>
       </tr>
