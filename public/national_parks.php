@@ -25,56 +25,23 @@ if ((isset($_POST['name'])) &&
   (isset($_POST['date_established'])) &&
   (isset($_POST['area_in_acres'])))
 {
+  // prepare the statement - use ? as placeholder =====================================================
+  $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES 
+    (name = ?, location = ?, description = ?, date_established = ?, area_in_acres = ?)");
+  // bind the parameters of the statement
+  $stmt->bind_param("ssssd", $name, $location, $description, $date_established, $area_in_acres);
+  // set variables values
   $name = (htmlspecialchars(strip_tags($_POST['name'])));       
   $location = (htmlspecialchars(strip_tags($_POST['location'])));       
   $description = (htmlspecialchars(strip_tags($_POST['description'])));       
   $date_established = (htmlspecialchars(strip_tags($_POST['date_established'])));       
   $area_in_acres = (htmlspecialchars(strip_tags($_POST['area_in_acres'])));         
-
-  // prepared statements =====================================================
-  $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES 
-    (name = ?, location = ?, description = ?, date_established = ?, area_in_acres = ?)");
-
-  $stmt->bind_param("ssssd", $name, $location, $description, $date_established, $area_in_acres);
-
+  // execute the insert
   $stmt->execute();
-
+  // close the database
   $mysqli->close();
 
-  // $stmt->bind_result($name, $location, $description, $date_established, $area_in_acres);
-
-  // $query = "INSERT INTO national_parks VALUES" . "('$name', '$location', '$description', '$date_established', '$area_in_acres')";
-
-  if (!$mysqli->query($query)) {
-      throw new Exception("Insert failed: (" . $mysqli->errno . ") " . $mysqli->error);
-  } 
-
 }
-
-
-
-
-
-
-// // code for html section
-// while ($stmt->fetch()){
-//   echo $name . PHP_EOL;
-// }
-
-// var_dump($_POST);
-// // Name Field Sample verification code
-
-// foreach ($national_parks as $parks) {
-//     $query = "INSERT INTO national_parks (name, location, description, date_established, area_in_acres) 
-//     VALUES ('{$parks['name']}', '{$parks['location']}', '{$parks['description']}', '{$parks['date_established']}', 
-//       '{$parks['area_in_acres']}');";
-    
-    // $mysqli->query($query);
-
-//   if (!$mysqli->query($query)) {
-//       throw new Exception("Query failed: (" . $mysqli->errno . ") " . $mysqli->error);
-//   }    
-// }
 
 ?>
 
@@ -150,7 +117,6 @@ if ((isset($_POST['name'])) &&
   </div>  
   <table class="table">
       <tr>
-          <th scope="col">Number</th>
           <th scope="col">Name
               <a href="?sort_col=name&sort_order=ASC"><i class="fa fa-chevron-up"></i></a>
               <a href="?sort_col=name&sort_order=DESC"><i class="fa fa-chevron-down"></i></a>
@@ -168,7 +134,6 @@ if ((isset($_POST['name'])) &&
       </tr>
       <? while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
          <tr> 
-          <td><?=$row['id']; ?></td>
           <td><?=$row['name']; ?></td>
           <td><?=$row['location']; ?></td>
           <td><?=$row['description']; ?></td>
