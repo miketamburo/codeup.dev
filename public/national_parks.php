@@ -9,38 +9,40 @@ if ($mysqli->connect_errno) {
   echo $mysqli->host_info . "\n";
 }
 
-if (isset($_GET['sort_col']) && isset($_GET['sort_order'])){
+// create prepard statements ===============================================
+
+if ((!empty($_POST['name'])) && 
+  (!empty($_POST['location'])) &&
+  (!empty($_POST['description'])) && 
+  (!empty($_POST['date_established'])) &&
+  (!empty($_POST['area_in_acres'])))
+{
+  // prepare the statement - use ? as placeholder =====================================================
+  $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES 
+    (?, ?, ?, ?, ?)");
+  // bind the parameters of the statement
+  $stmt->bind_param("ssssd", $_POST['name'], $_POST['location'], $_POST['description'], $_POST['date_established'], $_POST['area_in_acres']);       
+  // execute the insert
+  $stmt->execute();
+} elseif ((empty($_POST))) {
+  $errorMsg = ' ';
+} elseif ((isset($_POST)) &&
+  (empty($_POST['name'])) && 
+  (empty($_POST['location'])) &&
+  (empty($_POST['description'])) && 
+  (empty($_POST['date_established'])) &&
+  (empty($_POST['area_in_acres'])))
+{
+  $errorMsg = "Error:  Unable to update the list due to an empty field submission.";
+} 
+
+
+if (!empty($_GET['sort_col']) && !empty($_GET['sort_order'])){
   $sortCol = $_GET['sort_col'];
   $sortOrd = $_GET['sort_order'];  
   $result = $mysqli->query("SELECT * FROM national_parks ORDER BY $sortCol $sortOrd"); 
 } else {
   $result = $mysqli->query("SELECT * FROM national_parks"); 
-}
-
-// create prepard statements ===============================================
-
-if ((isset($_POST['name'])) && 
-  (isset($_POST['location'])) &&
-  (isset($_POST['description'])) && 
-  (isset($_POST['date_established'])) &&
-  (isset($_POST['area_in_acres'])))
-{
-  // prepare the statement - use ? as placeholder =====================================================
-  $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES 
-    (name = ?, location = ?, description = ?, date_established = ?, area_in_acres = ?)");
-  // bind the parameters of the statement
-  $stmt->bind_param("ssssd", $name, $location, $description, $date_established, $area_in_acres);
-  // set variables values
-  $name = (htmlspecialchars(strip_tags($_POST['name'])));       
-  $location = (htmlspecialchars(strip_tags($_POST['location'])));       
-  $description = (htmlspecialchars(strip_tags($_POST['description'])));       
-  $date_established = (htmlspecialchars(strip_tags($_POST['date_established'])));       
-  $area_in_acres = (htmlspecialchars(strip_tags($_POST['area_in_acres'])));         
-  // execute the insert
-  $stmt->execute();
-  // close the database
-  $mysqli->close();
-
 }
 
 ?>
@@ -74,7 +76,7 @@ if ((isset($_POST['name'])) &&
 
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              </button><h3 class="whiteletters" class="navbar-brand">National Parks</h3>
+              </button><h3 class="whiteletters" class="navbar-brand">National Parks</h3><h4><?=$errorMsg ?></h4>
             </div>
             <!-- End of navbar header ===========-->
             </div>
@@ -93,23 +95,23 @@ if ((isset($_POST['name'])) &&
             Add A Park!<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <form method="POST" action="">
+            <form method="POST" action="national_parks.php">
               <label for='name'> Name: </label>
-                <input id="name" name="name" type="text" autofocus = 'autofocus' tab=1 placeholder="Enter Park Name (Required)" style="width:200px;">
+                <li><input id="name" name="name" type="text" autofocus = 'autofocus' tab=1 placeholder="Enter Park Name (Required)" style="width:200px;"></li>
                 <p></p>
                 <label for='location'> Location: </label>
-                <input id='location' name='location' type="text" tab=2 placeholder="Enter location (Required)" style="width:200px;">
+                <li><input id='location' name='location' type="text" tab=2 placeholder="Enter location (Required)" style="width:200px;"></li>
                 <p></p>
                 <label for='description'> Description: </label>
-                <input id="description" name="description" type="text" tab=3 placeholder="Enter description (Required)" style="width:200px;">
+                <li><input id="description" name="description" type="text" tab=3 placeholder="Enter description (Required)" style="width:200px;"></li>
                 <p></p>
                 <label for='date_established'> Date Est.: </label>
-                <input id="date_established" name="date_established" type="text" tab=4 placeholder="Date est. (Required)" style="width:200px;">
+                <li><input id="date_established" name="date_established" type="text" tab=4 placeholder="Date est. (Required)" style="width:200px;"></li>
                 <p></p>
                 <label for='area_in_acres'> aread_in_acres: </label>
-                <input id="area_in_acres" name="area_in_acres" type="text" tab=5 placeholder="Enter acreage (Required)" style="width:200px;">
+                <li><input id="area_in_acres" name="area_in_acres" type="text" tab=5 placeholder="Enter acreage (Required)" style="width:200px;"></li>
                 <p></p>
-                <input type="submit" value="Update Park Roster" />
+                <li><input type="submit" value="Update Park Roster" /></li>
             </form>
           </ul>
         </li>
@@ -143,7 +145,6 @@ if ((isset($_POST['name'])) &&
       <? endwhile; ?>
   </table>
 </div>
-
 
 <!-- ================================================== -->
 <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
