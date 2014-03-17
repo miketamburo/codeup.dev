@@ -27,23 +27,35 @@ if ((!empty($_POST['name'])) &&
 } elseif ((empty($_POST))) {
   $errorMsg = ' ';
 } elseif ((isset($_POST)) &&
-  (empty($_POST['name'])) && 
-  (empty($_POST['location'])) &&
-  (empty($_POST['description'])) && 
-  (empty($_POST['date_established'])) &&
+  (empty($_POST['name'])) || 
+  (empty($_POST['location'])) ||
+  (empty($_POST['description'])) || 
+  (empty($_POST['date_established'])) ||
   (empty($_POST['area_in_acres'])))
 {
   $errorMsg = "Error:  Unable to update the list due to an empty field submission.";
 } 
 
+///// GET VALIDATION CODE 
+$validCols = array('name', 'location', 'date_established');
 
-if (!empty($_GET['sort_col']) && !empty($_GET['sort_order'])){
+$sortCol = 'name';
+$sortOrd = 'ASC';
+
+if (isset($_GET['sort_col']) && in_array($_GET['sort_col'], $validCols))
+{
   $sortCol = $_GET['sort_col'];
-  $sortOrd = $_GET['sort_order'];  
-  $result = $mysqli->query("SELECT * FROM national_parks ORDER BY $sortCol $sortOrd"); 
-} else {
-  $result = $mysqli->query("SELECT * FROM national_parks"); 
 }
+
+if (isset($_GET['sort_order']) && $_GET['sort_order'] == 'DESC')
+{
+  $sortOrd = 'DESC';
+}
+
+$result = $mysqli->query("SELECT * FROM national_parks ORDER BY $sortCol $sortOrd");
+///// END VALIDATION CODE
+
+
 
 ?>
 
