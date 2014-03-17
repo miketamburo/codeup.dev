@@ -16,18 +16,64 @@ if (isset($_GET['sort_col']) && isset($_GET['sort_order'])){
 } else {
   $result = $mysqli->query("SELECT * FROM national_parks"); 
 }
-// prepared statements
-// $stmt = $mysqli->prepare("SELECT name, location, description, date_established, area_in_acres FROM national_parks 
-//   WHERE name = ?, location = ?, description = ?, date_established = ?, area_in_acres = ?");
 
-// $stmt->bind_param("ssssd", 'name', 'location', 'description', 'date_established', 'area_in_acres');
+// create prepard statements ===============================================
 
-// $stmt->execute();
+if ((isset($_POST['name'])) && 
+  (isset($_POST['location'])) &&
+  (isset($_POST['description'])) && 
+  (isset($_POST['date_established'])) &&
+  (isset($_POST['area_in_acres'])))
+{
+  $name = (htmlspecialchars(strip_tags($_POST['name'])));       
+  $location = (htmlspecialchars(strip_tags($_POST['location'])));       
+  $description = (htmlspecialchars(strip_tags($_POST['description'])));       
+  $date_established = (htmlspecialchars(strip_tags($_POST['date_established'])));       
+  $area_in_acres = (htmlspecialchars(strip_tags($_POST['area_in_acres'])));         
 
-// $stmt->bind_result($name, $location, $description, $date_established, $area_in_acres);
+  // prepared statements =====================================================
+  $stmt = $mysqli->prepare("INSERT INTO national_parks (name, location, description, date_established, area_in_acres) VALUES 
+    (name = ?, location = ?, description = ?, date_established = ?, area_in_acres = ?)");
+
+  $stmt->bind_param("ssssd", $name, $location, $description, $date_established, $area_in_acres);
+
+  $stmt->execute();
+
+  $mysqli->close();
+
+  // $stmt->bind_result($name, $location, $description, $date_established, $area_in_acres);
+
+  // $query = "INSERT INTO national_parks VALUES" . "('$name', '$location', '$description', '$date_established', '$area_in_acres')";
+
+  if (!$mysqli->query($query)) {
+      throw new Exception("Insert failed: (" . $mysqli->errno . ") " . $mysqli->error);
+  } 
+
+}
+
+
+
+
+
+
 // // code for html section
 // while ($stmt->fetch()){
 //   echo $name . PHP_EOL;
+// }
+
+// var_dump($_POST);
+// // Name Field Sample verification code
+
+// foreach ($national_parks as $parks) {
+//     $query = "INSERT INTO national_parks (name, location, description, date_established, area_in_acres) 
+//     VALUES ('{$parks['name']}', '{$parks['location']}', '{$parks['description']}', '{$parks['date_established']}', 
+//       '{$parks['area_in_acres']}');";
+    
+    // $mysqli->query($query);
+
+//   if (!$mysqli->query($query)) {
+//       throw new Exception("Query failed: (" . $mysqli->errno . ") " . $mysqli->error);
+//   }    
 // }
 
 ?>
@@ -80,15 +126,23 @@ if (isset($_GET['sort_col']) && isset($_GET['sort_order'])){
             Add A Park!<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <form class="navbar-form navbar-left" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Park Name">
-                <input type="text" class="form-control" placeholder="Location">
-                <input type="text" class="form-control" placeholder="Description">
-                <input type="text" class="form-control" placeholder="Date est. YYYY-MM-DD">
-                <input type="text" class="form-control" placeholder="Area In Acres">
-              </div>
-              <button type="submit" class="btn btn-default">Apply Info</button>
+            <form method="POST" action="">
+              <label for='name'> Name: </label>
+                <input id="name" name="name" type="text" autofocus = 'autofocus' tab=1 placeholder="Enter Park Name (Required)" style="width:200px;">
+                <p></p>
+                <label for='location'> Location: </label>
+                <input id='location' name='location' type="text" tab=2 placeholder="Enter location (Required)" style="width:200px;">
+                <p></p>
+                <label for='description'> Description: </label>
+                <input id="description" name="description" type="text" tab=3 placeholder="Enter description (Required)" style="width:200px;">
+                <p></p>
+                <label for='date_established'> Date Est.: </label>
+                <input id="date_established" name="date_established" type="text" tab=4 placeholder="Date est. (Required)" style="width:200px;">
+                <p></p>
+                <label for='area_in_acres'> aread_in_acres: </label>
+                <input id="area_in_acres" name="area_in_acres" type="text" tab=5 placeholder="Enter acreage (Required)" style="width:200px;">
+                <p></p>
+                <input type="submit" value="Update Park Roster" />
             </form>
           </ul>
         </li>
