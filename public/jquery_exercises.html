@@ -19,22 +19,36 @@
 		#codeup{
 			color: green;
 		}
+		.clickable {
+			cursor: pointer;
+		}
+
 	</style>
 
 	<script src="/js/jquery.js"></script>
 
 	<script type="text/javascript">
-	$(document).ready(function() {
-    	$('li').css('font-size', '20px');
-    	$('h1, p, li').css('background-color', '#FF0');
-    	var contents = $('h1').html();
-    	alert (contents);
-	});
+	$('document').ready(function() {	
+		$('h1').click(function() {
+            	$('h1').css('background-color', '#F00');
+            });
+
+        $('p').dblclick(function() {
+            	$('p').css('font-size', '18px');
+            });
+
+		$('li').hover(function() {
+            	$(this).css('background-color', '#F00');
+            },
+            function() {
+                $(this).css('background-color', '#FFF');
+            });
+   	 });
 	</script>
 </head>
 <body>
 	<div class="container">
-		<h1 id="codeup">Hello Codeup</h1>
+		<h1 class="clickable" id="codeup">Hello Codeup</h1>
 		<p id="paragraph"> Codeup is a 12 week crash course into the world of software web development.  The following topics are covered.
 		</p>
 			<ul>
