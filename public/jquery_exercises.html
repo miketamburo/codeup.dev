@@ -10,6 +10,9 @@
 		.listItem{
 			color: blue;
 		}
+		.codeup{
+
+		}
 		#paragraph {
 			color: red;
 		}
@@ -22,15 +25,14 @@
 
 	<script type="text/javascript">
 	$(document).ready(function() {
-    	var contents = $('#paragraph').html();
-    	alert(contents);
+    	$('.codeup').css('border', 'solid 1px red');
 	});
 	</script>
 </head>
 <body>
 	<div class="container">
 		<h1 id="codeup">Hello Codeup</h1>
-		<p id="paragraph"> Codeup is a 12 week crash course into the world of software web development.  The following topics are covered.
+		<p id="codeup"> Codeup is a 12 week crash course into the world of software web development.  The following topics are covered.
 		</p>
 			<ul>
 				<li class="listItem">Linux</li>
@@ -39,6 +41,16 @@
 				<li class="listItem">PHP</li>
 				<li class="listItem">JS</li>
 			</ul>
+
+		<p class="codeup"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+		</p>
+		<p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+		</p>
+		<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</p>
+
+
 	</div>
 
 </body>
