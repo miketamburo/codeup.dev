@@ -1,14 +1,47 @@
 <html>
 <head>
 	<title></title>
-	<script src="/js/jquery.js"></script>
-	<script>
-	$(document).ready(function() {
-    	alert( 'The DOM has finished loading!' );
-	});
-	</script>
+
+	<style>
+		.container{
+			text-align: left;
+			color: black;
+		}
+		.listItem{
+			color: blue;
+		}
+		#paragraph {
+			color: red;
+		}
+		#codeup{
+			color: green;
+		}
+	</style>
+
+
+
 </head>
 <body>
+	<div class="container">
+		<h1 id="codeup">Hello Codeup</h1>
+		<p id="paragraph"> Codeup is a 12 week crash course into the world of software web development.  The following topics are covered.
+		</p>
+			<ul>
+				<li class="listItem">Linux</li>
+				<li class="listItem">Apache</li>
+				<li class="listItem">MySQL</li>
+				<li class="listItem">PHP</li>
+				<li class="listItem">JS</li>
+			</ul>
+	</div>
 
+	<script src="/js/jquery.js"></script>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+    	var contents = $('#paragraph').html();
+    	alert(contents);
+	});
+	</script>
 </body>
 </html>
