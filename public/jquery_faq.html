@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>National Park Facts</title>
+
+	<style>
+		.invisible {
+			display: none;
+		}
+		.clickable {
+			cursor: pointer;
+		}
+		dt{
+			font-style: bold;
+			font-size: 25px;
+		}
+
+	</style>
+
+	<script src="/js/jquery.js"></script>
+
+</head>
+<body>
+	<h1>National Park FAQs</h1>
+	<button class="clickable" id="toggleButton">Toggle Answers</button>
+	<div class="clickable">
+		<dl>
+			<dt>1. Who is the director of the National Park Service?</dt>
+				<dd class="invisible">Jonathan B. Jarvis</dd>
+				<br>
+			<dt>2. What government agency oversees the National Park Service?</dt>
+				<dd class="invisible">The National Park Service is a bureau of the Department of the Interior. Directly overseeing its operation is the Department's Assistant Secretary for Fish and Wildlife and Parks.</dd>
+				<br>
+			<dt>3. How old is the national park system?</dt>
+				<dd class="invisible">The National Park Service was created by an Act signed by President Woodrow Wilson on August 25, 1916. Yellowstone National Park was established by an Act signed by President Ulysses S. Grant on March 1, 1872, as the nation's first national park. View the national park system Timeline.</dd>
+				<br>
+			<dt>4. How many areas are there in the national park system?</dt>
+				<dd class="invisible">The national park system comprises 401 areas covering more than 84 million acres in every state, the District of Columbia, American Samoa, Guam, Puerto Rico, and the Virgin Islands. These areas include national parks, monuments, battlefields, military parks, historical parks, historic sites, lakeshores, seashores, recreation areas, scenic rivers and trails, and the White House. Learn more about national park designations. See the complete list of National Park Service sites and affiliated areas by type and number.</dd>
+				<br>
+			<dt>5. What is the largest/smallest national park site?</dt>
+				<dd class="invisible">Largest - Wrangell-St. Elias National Park and Preserve, AK - 13.2 million acres&nbsp;Smallest - Thaddeus Kosciuszko National Memorial, PA - 0.02 acres</dd>
+				<br>
+			<dt>6. How many employees are in the National Park Service?</dt>
+				<dd class="invisible">Permanent, Temporary, and Seasonal - Approximately 22,000 diverse professionals&nbsp;Volunteers in Parks - 221,000</dd>
+				<br>
+			<dt>7. How many people visit the national parks?</dt>
+				<dd class="invisible">Total recreation visitors to the national parks in 2011: 278,939,216.</dd>
+				<br>
+			<dt>8. What is the National Park Service budget?</dt>
+				<dd class="invisible">FY 2012 Enacted - $2.98 billion&nbsp;FY 2013 Request - $2.99 billion</dd>
+				<br>
+			<dt>9. How do I obtain a park pass?</dt>
+				<dd class="invisible">Visitors can obtain park passes by visiting their nearest park site. Most sites have passes available, however it is recommended to call a park prior to your visit. Learn more about the America the Beautiful - National Parks and Federal Recreation Lands Pass.</dd>
+				<br>
+			<dt>10. How do I make reservations for camping/lodging in national parks?</dt>
+				<dd class="invisible">Not all parks participate in this service, many campgrounds are first come, first served. For more information on specific camping and lodging services offered at the park(s) of your interest, please check their homepage by using our search feature.</dd>
+
+		</dl>
+
+	</div>
+	<script type="text/javascript">	
+
+		$('#toggleButton').click(function() {
+            	$('dd').toggleClass('invisible');
+            });
+
+		$('dt').on('click', function() {
+			$(this).next().toggleClass('invisible');
+		});
+
+	</script>
+
+</body>
+</html>
