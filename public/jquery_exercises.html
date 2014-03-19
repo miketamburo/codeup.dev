@@ -25,14 +25,17 @@
 
 	<script type="text/javascript">
 	$(document).ready(function() {
-    	$('.codeup').css('border', 'solid 1px red');
+    	$('li').css('font-size', '20px');
+    	$('h1, p, li').css('background-color', '#FF0');
+    	var contents = $('h1').html();
+    	alert (contents);
 	});
 	</script>
 </head>
 <body>
 	<div class="container">
 		<h1 id="codeup">Hello Codeup</h1>
-		<p id="codeup"> Codeup is a 12 week crash course into the world of software web development.  The following topics are covered.
+		<p id="paragraph"> Codeup is a 12 week crash course into the world of software web development.  The following topics are covered.
 		</p>
 			<ul>
 				<li class="listItem">Linux</li>
