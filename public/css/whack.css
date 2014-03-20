@@ -1,0 +1,20 @@
+/* 
+this content is stored in a file named "whack.css" 
+in a directory named "css" in the web root 
+*/
+.box {
+	height: 50px;
+	width: 150px;
+	margin-top: 10px;
+	border: solid 1px #000;
+	padding: 10px;
+	background-color: #F00;
+}
+
+.clickable {
+	cursor: crosshair;
+}
+
+.container {
+
+}
