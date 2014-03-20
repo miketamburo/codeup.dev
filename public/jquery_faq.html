@@ -84,22 +84,28 @@
 		</div>
 	</div>
 	<script type="text/javascript">	
+		$('dd').hide();
 
-		$('#toggleButton').click(function() {
-            	$('dd').toggleClass('invisible');
-            });
+		// $('#toggleButton').click(function() {
+  //           	$('dd').toggleClass('invisible');
+  //           });
 
-		$('dt').on('click', function() {
-			$(this).next().toggleClass('invisible');
-		});
+		// $('dt').on('click', function() {
+		// 	$(this).next().toggleClass('invisible');
+		// });
 
-		$('ul').each(function(){
-			$(this).children().first().css('font-weight', 'bold');
-		});
+		// $('ul').each(function(){
+		// 	$(this).children().first().css('font-weight', 'bold');
+		// });
 
 		$('li').click(function(){
-			$(this).parent().addClass('invisible');
+			$(this).parent().hide();
 		});
+
+		$('dt').click(function(){
+			$('dd').toggle();
+		});
+			
 
 	</script>
 
