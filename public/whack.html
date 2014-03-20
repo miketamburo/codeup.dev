@@ -18,6 +18,10 @@
 				$(this).fadeOut(800);
 			})
 
+			$('img').click(function(){
+				$(this).fadeOut(800);
+			})
+
 		// end of document ready function	
 		});
 
@@ -25,16 +29,53 @@
 </head>
 <!-- NAVBAR ============================================================================ -->
 <body>
- 	<div class="container">
+	<h1>Whack - A - Something</h1>
+ 	<div class="gameboard">
 
- 		<div class="box">
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
  		</div>
- 		
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
+ 		<div class="mole-hole">
+ 			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
+ 		</div>
+
 	</div>
 
- 	<div>
-		<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
-	</div>  
+	<script>
+		var holes = $('.mole-hole');
+		var rand = Math.floor(Math.random() * holes.length);
+		$(holes[rand]).children().fadeIn();
+
+	</script>
 
 </body>
 </html>
