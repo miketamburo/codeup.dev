@@ -9,9 +9,13 @@
 		.clickable {
 			cursor: pointer;
 		}
+		body{
+			background-color: #AAB;
+		}
+
 		dt{
 			font-style: bold;
-			font-size: 25px;
+			font-size: 20px;
 		}
 
 	</style>
@@ -55,7 +59,29 @@
 				<dd class="invisible">Not all parks participate in this service, many campgrounds are first come, first served. For more information on specific camping and lodging services offered at the park(s) of your interest, please check their homepage by using our search feature.</dd>
 
 		</dl>
-
+		<div>
+			<h3>Arches National Park</h3>
+			<ul>
+				<li>The national park lies atop an underground evaporite layer or salt bed, which is the main cause of the formation of the arches, spires, balanced rocks, sandstone fins, and eroded monoliths in the area. </li>
+				<li>The Arches area was first brought to the attention of the National Park Service by Frank A. Wadleigh, passenger traffic manager of the Denver and Rio Grande Western Railroad. </li>
+				<li>The purpose of the reservation under the 1906 Antiquities Act was to protect the arches, spires, balanced rocks, and other sandstone formations for their scientific and educational value. </li>
+				<li>In late 1938, President Franklin D. Roosevelt signed a proclamation which enlarged Arches to protect additional scenic features and permit development of facilities to promote tourism. </li>
+			</ul>
+			<h3>Big Bend National Park</h3>
+			<ul>
+				<li>Located in Brewster County Texas</li>
+				<li>Highest Point is Emory Peak, Chisos Mountains</li>
+				<li>801,163 acres</li>
+				<li>In accordance with the Treaty of Guadalupe Hidalgo, the park's territory extends only to the center of the deepest river channel as the river flowed in 1848. The rest of the land south of that channel, and the river, lies within Mexican territory.</li>
+			</ul>
+			<h3>Carlsbad Caverns</h3>
+			<ul>
+				<li>Located in Eddy County New Mexico</li>
+				<li>Established May 14, 1930</li>
+				<li>Carlsbad Caverns National Park is open every day of the year except Thanksgiving Day, Christmas Day, and New Year's Day. </li>
+				<li>Carlsbad Cavern includes a large cave chamber, the Big Room, a natural limestone chamber which is almost 4,000 feet (1,220 m) long, 625 feet (191 m) wide, and 255 feet (78 m) high at the highest point. It is the fifth largest chamber in North America and the twenty eight largest in the world. </li>
+			</ul>
+		</div>
 	</div>
 	<script type="text/javascript">	
 
@@ -65,6 +91,14 @@
 
 		$('dt').on('click', function() {
 			$(this).next().toggleClass('invisible');
+		});
+
+		$('ul').each(function(){
+			$(this).children().first().css('font-weight', 'bold');
+		});
+
+		$('li').click(function(){
+			$(this).parent().addClass('invisible');
 		});
 
 	</script>
