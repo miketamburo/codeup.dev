@@ -84,6 +84,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">	
+		
 		$('dd').hide();
 
 		// $('#toggleButton').click(function() {
@@ -103,9 +104,12 @@
 		});
 
 		$('dt').click(function(){
-			$('dd').toggle();
+			$('dd').fadeToggle(1000);
 		});
-			
+		
+		$('h3').click(function(){
+			$('ul').fadeToggle(1200);
+		});
 
 	</script>
 
