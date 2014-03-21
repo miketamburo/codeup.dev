@@ -10,6 +10,12 @@ in a directory named "css" in the web root
 	float: left;
 }
 
+.container {
+	margin: 0px auto 50px auto;
+	padding-bottom: 20px;
+	width: 720px;
+}
+
 .clickable {
 	cursor: pointer;
 }
@@ -17,6 +23,21 @@ in a directory named "css" in the web root
 .gameboard {
 	margin: auto;
 	width: 468px;
+}
+
+.scorebox {
+	height: 50px;
+	width: 150px;
+	border: solid 3px #000;
+	background-color: #FFF;
+	float: left;
+	text-align: center;
+	margin-right: 12px;
+	margin-left: 12px;
+}
+
+#buttonDiv {
+	float: left;
 }
 
 img {
@@ -29,4 +50,10 @@ h1 {
 	color: #F00;
 	text-align: center;
 	font-size: 60px;
+	margin-bottom: 10px;
+}
+
+button {
+	height: 50px;
+	float: right;
 }

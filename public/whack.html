@@ -11,26 +11,29 @@
 
 	<link href="/css/whack.css" rel="stylesheet">
 	<script src="/js/jquery.js"></script>
-
-	<script>
-		$(document).ready(function(){
-			$('img').click(function(){
-				$(this).fadeOut(800);
-			})
-
-			$('img').click(function(){
-				$(this).fadeOut(800);
-			})
-
-		// end of document ready function	
-		});
-
-	</script>	
+	<script> var hit = 0; </script>
+	
 </head>
 <!-- NAVBAR ============================================================================ -->
 <body>
 	<h1>Whack - A - Something</h1>
+
+	<div class="container">
+
+		<div class="scorebox" id="highscore">High Score<script>hit</script></div>
+
+		<div class="scorebox" id="score">Score</div>
+
+		<div class="scorebox" id="hits">Hits</div>
+
+		<div class="scorebox" id="misses">Misses</div>
+
+	</div>
+	<div id="buttonDiv">
+		<button onclick="startGame()">Start New Game</button>
+ 	</div>
  	<div class="gameboard">
+ 		
 
  		<div class="mole-hole">
  			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
@@ -71,9 +74,75 @@
 	</div>
 
 	<script>
-		var holes = $('.mole-hole');
-		var rand = Math.floor(Math.random() * holes.length);
-		$(holes[rand]).children().fadeIn();
+		var level = 1;
+		var time = 1400;
+		var hits = 0;
+		var count = 0;
+		var misses = 0;
+		var highscore = 0;
+		var score = 0;
+
+		$('img').click(function(){
+			$(this).hide();
+			hits = (hits + 1);
+		});
+
+		function gamePlay(){
+
+			var holes = $('.mole-hole');
+			var rand = Math.floor(Math.random() * holes.length);
+			$(holes).children().fadeOut();
+			$(holes[rand]).children().fadeIn();
+			
+		};
+
+		// set a game duration interval
+		function startGame(){
+			setTimeout(myStopFunction, 30000);
+			var gameTime = setInterval(gamePlay, time);
+		}
+
+		// function to stop / reset the timer for game play
+		function myStopFunction() {
+			clearInterval(gameTime);
+		}
+
+		// adjust player level based on number of hits
+		if (hits == 10){
+			level = 2;
+		} else if (hits == 15){
+			level = 3;
+		} else if (hits == 20){
+			level = 4;
+		} else if (hits == 25){
+			level = 5;
+		}
+
+		// adjust reflex time based on level
+		if (level == 2){
+			time = 1200;
+		} else if (level == 3){
+			time = 900;
+		} else if (level == 4){
+			time = 700;
+		} else if (level > 5){
+			time = 400;
+		}
+
+		
+
+// get the hits info by id
+var hits = document.getElementById('hits');
+
+console.log(hits.innerHTML); 
+
+// assign a new value to the inner HTML 
+hits.innerHTML = hits.value;
+
+console.log(hits.innerHTML); 
+
+
+
 
 	</script>
 
