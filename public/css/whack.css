@@ -13,7 +13,7 @@ in a directory named "css" in the web root
 .container {
 	margin: 0px auto 50px auto;
 	padding-bottom: 20px;
-	width: 720px;
+	width: 800px;
 }
 
 .clickable {
@@ -27,17 +27,21 @@ in a directory named "css" in the web root
 
 .scorebox {
 	height: 50px;
-	width: 150px;
+	width: 100px;
 	border: solid 3px #000;
 	background-color: #FFF;
 	float: left;
 	text-align: center;
+	font-size: 30px;
 	margin-right: 12px;
 	margin-left: 12px;
 }
 
 #buttonDiv {
-	float: left;
+	position: absolute;
+	left: 50px;
+	top: 100px;
+	width: 180px;
 }
 
 img {
@@ -53,7 +57,16 @@ h1 {
 	margin-bottom: 10px;
 }
 
+h3 {
+	height: 15px;
+	width: 100px;
+	float: left;
+	margin-top: 2px;
+	text-align: left;
+}
+
 button {
 	height: 50px;
-	float: right;
+	margin-top: 20px;
+
 }
