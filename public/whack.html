@@ -16,7 +16,7 @@
 </head>
 <!-- NAVBAR ============================================================================ -->
 <body>
-	<div id="background">
+
 	<h1>Guac - a - mole</h1>
 
 	<div id="buttonDiv">
@@ -76,7 +76,7 @@
  		</div>
 
 	</div>
-</div>
+
 
 	<script>
 		var level = 1,
@@ -87,6 +87,7 @@
 		highscore = 0,
 		score = 0,
 		gameLoop = '';
+		clock = 3000;
 
 		$('img').click(function(){
 			$(this).hide();
@@ -102,10 +103,10 @@
 			var rand = Math.floor(Math.random() * holes.length);
 			$(holes).children().fadeOut();
 			$(holes[rand]).children().fadeIn();
-			count = (count + 1);
 			misses = count - hits;
+			count = (count + 1);
 		    $('#misses').html(misses);
-
+		
 		    //adjust player level based on number of hits
 			if (hits <= 10){
 				level = 1;
@@ -133,10 +134,12 @@
 		};	
 
 		// set a game duration interval
-		function startGame(){	
+		function startGame(){
+			resetBoard();
 			$('button').hide();
+			$('h2').hide();
 			gamePlay();
-			setTimeout(stopGame, 5000);
+			setTimeout(stopGame, clock);
 		}
 
 		// function to stop / reset the timer for game play
@@ -147,8 +150,18 @@
 			$('h2').show();
 			$('button').show();
 
-			// show game over message
-			
+			// high score
+		    if (score > highscore){
+		    	highscore = score;
+		    	$('#highscore').html(highscore);
+		    }	
+		}
+
+		function resetBoard(){
+			hits = 0;
+			count = 0;
+			misses = 0;
+			score = 0;
 		}
 
 
