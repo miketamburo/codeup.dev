@@ -23,6 +23,7 @@ in a directory named "css" in the web root
 .gameboard {
 	margin: auto;
 	width: 468px;
+	position: relative;
 }
 
 .scorebox {

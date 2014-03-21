@@ -16,7 +16,7 @@
 </head>
 <!-- NAVBAR ============================================================================ -->
 <body>
-	<h1>Whack - A - Something</h1>
+	<h1>Guac - a - mole</h1>
 
 	<div id="buttonDiv">
 		<h3>High Score</h3>
@@ -84,8 +84,7 @@
 			hits = (hits + 1);			
 			$('#hits').html(hits);
 			score = (score + 100);
-			$('#score').html(score);
-			
+			$('#score').html(score);	
 		});
 
 		function gamePlay(){
@@ -95,14 +94,10 @@
 			$(holes).children().fadeOut();
 			$(holes[rand]).children().fadeIn();
 			count = (count + 1);
-			if (count == hits){
-				misses = misses;
-			} else if (count > hits){
-				misses = (misses + 1);
-			}
-			$('misses').html(misses);
+			misses = count - hits;
+		    $('#misses').html(misses);
 				
-			};
+		};
 
 		// set a game duration interval
 		function startGame(){
