@@ -58,6 +58,12 @@ h1 {
 	margin-bottom: 10px;
 }
 
+h2 {
+	width: 468px;
+	text-align: center;
+	display: none;
+}
+
 h3 {
 	height: 15px;
 	width: 100px;
@@ -69,5 +75,13 @@ h3 {
 button {
 	height: 50px;
 	margin-top: 20px;
+	background-color: #F00;
+	font-size: 14px;
 
+}
+
+body {
+	background-image: url('../img/desertRest.jpeg');
+	background-size:1000px 1000px;
+	background-repeat:  no-repeat;
 }
