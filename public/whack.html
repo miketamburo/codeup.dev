@@ -14,12 +14,11 @@
 	<script> var hit = 0; </script>
 	
 </head>
-<!-- NAVBAR ============================================================================ -->
 <body>
 
 	<h1>Guac - a - mole</h1>
 	<div id="shade">
-		<div id="buttonDiv">
+		<div>
 			<h3>Time:</h3>
 			<div class="scorebox" id="clock">0</div>
 			<h3>High Score</h3>
@@ -32,8 +31,6 @@
 			<div class="scorebox" id="hits">0</div>
 			<h3>Misses</h3>
 			<div class="scorebox" id="misses">0</div>
-			<button onclick="startGame()">Start New Game</button>
-			
 	 	</div>
 	 </div>
  	<div class="gameboard">
@@ -74,11 +71,11 @@
  			<img class="clickable" src="/img/avocadoHappy.jpeg" alt="avocado"/>
  		</div>
 
- 		<div>
- 			<h2>Game Over</h2>
- 		</div>
 	</div>
-
+ 		<div id="buttonDiv">
+ 			<h2>Game Over</h2>
+ 			<button onclick="startGame()">Start New Game</button>
+ 		</div>
 
 	<script>
 		var level = 1,
@@ -90,16 +87,15 @@
 		score = 0,
 		gameLoop = '';
 		setTime = 30;
-		clock = 30000;
+		// clock = 30000;
 		var backgroundMusic  = document.createElement('audio');
-		backgroundMusic.setAttribute("src", "../sounds/spanish.wav")
+		backgroundMusic.setAttribute("src", "../sounds/wetsplat01.wav")
 
 		$('img').click(function(){
 			$(this).hide();
 			hits = (hits + 1);			
-			$('#hits').html(hits);
 			score = (score + 100);
-			$('#score').html(score);	
+			backgroundMusic.play();	
 		});
 
 		function gamePlay(){
@@ -111,20 +107,20 @@
 			misses = count - hits;
 			count = (count + 1);
 			setTime = (setTime - 1);
+
 			if (setTime == 0){
 				stopGame();
+				$('#clock').html(setTime);
+		    	$('#misses').html(misses);
+		    	highscore = score;
+
 			} else if (setTime > 0){
 		    	$('#clock').html(setTime);
+		    	$('#misses').html(misses);
+		    	$('#hits').html(hits);
+		    	$('#score').html(score);
 		    }	
-			// } else if (setTime < 0){
-			// 	()
-			// }
 
-			clock = setTime;
-		    $('#misses').html(misses);
-
-
-		
 		    //adjust player level based on number of hits
 			if (hits <= 10){
 				level = 1;
@@ -141,11 +137,11 @@
 			if (level == 1){
 				time = 1000;
 			} else if (level == 2){
-				time = 800;
+				time = 900;
 			} else if (level == 3){
-				time = 400;
+				time = 500;
 			} else if (level == 4){
-				time = 200;
+				time = 300;
 			}
 				
 			gameLoop = setTimeout(gamePlay, time);
@@ -155,7 +151,6 @@
 		function startGame(){
 			resetBoard();
 			$('button').hide();
-			backgroundMusic.play()
 			$('h2').hide();
 			gamePlay();
 			setTimeout(stopGame, 30000);
@@ -169,8 +164,8 @@
 			$('h2').show();
 			$('button').show();
 
-			// high score
-		    if (score > highscore){
+			// high score record
+		    if (score > highscore && setTime == 0){
 		    	highscore = score;
 		    	$('#highscore').html(highscore);
 		    }	
@@ -184,9 +179,7 @@
 			setTime = 30;
 		}
 
-
 	</script>
-
 
 </body>
 </html>

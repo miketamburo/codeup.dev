@@ -19,7 +19,6 @@ in a directory named "css" in the web root
 .gameboard {
 	margin: auto;
 	width: 468px;
-	position: relative;
 	cursor: url('../img/hammer.png'), auto;
 }
 
@@ -31,19 +30,19 @@ in a directory named "css" in the web root
 	float: left;
 	text-align: center;
 	font-size: 30px;
-	margin-right: 12px;
-	margin-left: 12px;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 #buttonDiv {
-	position: absolute;
-	left: 50px;
-	top: 100px;
-	width: 180px;
+	margin-top: 50px;
 }
 
 #shade {
-	background-color: #000;
+	background-color: #FFF;
+	margin-bottom: 200px;
 	
 }
 
@@ -79,18 +78,20 @@ h3 {
 	float: left;
 	font-size: 30px;
 	margin-top: 2px;
-	text-align: left;
+	text-align: right;
 }
 
 button {
 	height: 50px;
-	margin-top: 20px;
+	margin-left: 50px;
+	margin-top: 50px;
 	background-color: #F00;
 	font-size: 14px;
+	float: left;
 }
 
 body {
-	background-image: url('../img/GuacamoleBackground.jpg');
+	background-image: url('../img/#.jpg');
 	background-size:1000px 1000px;
 	background-repeat:  no-repeat;
 	opacity: .9;
