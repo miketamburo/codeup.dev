@@ -99,16 +99,16 @@
 		// 	$(this).children().first().css('font-weight', 'bold');
 		// });
 
-		$('li').click(function(){
-			$(this).parent().hide();
-		});
+		// $('li').click(function(){
+		// 	$(this).parent().hide();
+		// });
 
 		$('dt').click(function(){
-			$('dd').fadeToggle(1000);
+			$('dd').slideToggle(1000);
 		});
 		
 		$('h3').click(function(){
-			$('ul').fadeToggle(1200);
+				$(this).next().slideToggle(1200);
 		});
 
 	</script>
