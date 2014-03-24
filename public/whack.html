@@ -89,7 +89,7 @@
 		setTime = 30;
 		// clock = 30000;
 		var backgroundMusic  = document.createElement('audio');
-		backgroundMusic.setAttribute("src", "../sounds/wetsplat01.wav")
+		backgroundMusic.setAttribute("src", "../sounds/wetsplat01.wav");
 
 		$('img').click(function(){
 			$(this).hide();
@@ -102,6 +102,7 @@
 
 			var holes = $('.mole-hole');
 			var rand = Math.floor(Math.random() * holes.length);
+			
 			$(holes).children().fadeOut();
 			$(holes[rand]).children().fadeIn();
 			misses = count - hits;
